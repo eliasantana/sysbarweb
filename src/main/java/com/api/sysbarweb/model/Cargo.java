@@ -30,7 +30,7 @@ public class Cargo {
         this.snAtivo = dto.snAtivo().toUpperCase();
     }
 
-    Cargo(){}
+    public Cargo(){}
 
     public Long getCdCargo() {
         return cdCargo;

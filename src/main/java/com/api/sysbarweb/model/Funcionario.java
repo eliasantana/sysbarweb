@@ -2,6 +2,7 @@ package com.api.sysbarweb.model;
 
 import com.api.sysbarweb.dto.FuncionarioDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdFuncionario;
+
+    private String nome;
     private String caminhoImagem;
     private String telefone;
     private String login;
@@ -34,7 +37,7 @@ public class Funcionario {
     @ManyToOne
     @JoinColumn(name = "cd_cargo")
     private Cargo cargo;
-    Funcionario(){
+    public Funcionario(){
 
     }
 
@@ -56,6 +59,7 @@ public class Funcionario {
         this.dtInclusao = dto.dtInclusao();
         this.cargo = dto.cargo();
         this.empresa = dto.empresa();
+        this.nome = dto.nome();
 
     }
 
@@ -193,5 +197,13 @@ public class Funcionario {
 
     public Empresa getEmpresa() {
         return empresa;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

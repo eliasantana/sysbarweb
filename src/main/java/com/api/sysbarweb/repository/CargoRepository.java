@@ -17,6 +17,6 @@ public interface CargoRepository extends CrudRepository<Cargo, Long> {
     @Query(value = "select * from cargo where ds_cargo=:cargo and sn_ativo='S'",nativeQuery = true)
     Optional<Cargo> existeCargo(String cargo);
 
-    @Query(value = "select * from cargo where cd_cargo=:cdcargo and sn_ativo",nativeQuery = true)
+    @Query(value = "select * from cargo where cd_cargo=:cdcargo and sn_ativo='S'",nativeQuery = true)
     Optional<Cargo> localizar(Long cdcargo);
 }

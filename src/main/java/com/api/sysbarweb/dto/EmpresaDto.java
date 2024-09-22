@@ -38,6 +38,8 @@ public class EmpresaDto {
     private String snAtivaCozinha;
     @NotNull(message = "O campo snAtivo não pode ser vazio")
     private String snAtivo;
+    @NotNull(message = "Teto de Desconto é obrigatório")
+    private Double tetoDesconto;
 
     public EmpresaDto(Empresa empresa){
         this.cdEmpresa = empresa.getCdEmpresa();
@@ -61,6 +63,7 @@ public class EmpresaDto {
         this.snAtivaCozinha = empresa.getSnAtivaCozinha();
         this.snAtivaDelivery = empresa.getSnAtivaDelivery();
         this.snAtivo = empresa.getSnAtivo();
+        this.tetoDesconto = empresa.getTetoDesconto();
     }
 
     public EmpresaDto(){
@@ -232,6 +235,14 @@ public class EmpresaDto {
 
     public void setSnAtivaCozinha(String snAtivaCozinha) {
         this.snAtivaCozinha = snAtivaCozinha;
+    }
+
+    public void setTetoDesconto(Double tetoDesconto) {
+        this.tetoDesconto = tetoDesconto;
+    }
+
+    public Double getTetoDesconto() {
+        return tetoDesconto;
     }
 
     @Override

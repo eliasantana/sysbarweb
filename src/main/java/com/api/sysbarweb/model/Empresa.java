@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -46,6 +47,9 @@ public class Empresa {
     private String snAtivaCozinha;
     @NotNull(message = "O campo snAtivo  é obrigatório!")
     private String snAtivo;
+
+    private double tetoDesconto;
+
     public Empresa(){
 
     }
@@ -71,6 +75,7 @@ public class Empresa {
         this.snAtivaCozinha = empresa.getSnAtivaCozinha();
         this.snAtivaDelivery = empresa.getSnAtivaDelivery();
         this.snAtivo = empresa.getSnAtivo();
+        this.tetoDesconto = empresa.getTetoDesconto();
     }
 
     public Long getCdEmpresa() {
@@ -242,6 +247,14 @@ public class Empresa {
 
     public String getSnAtivo() {
         return snAtivo;
+    }
+
+    public void setTetoDesconto(double tetoDesconto) {
+        this.tetoDesconto = tetoDesconto;
+    }
+
+    public double getTetoDesconto() {
+        return tetoDesconto;
     }
 
     @Override
