@@ -3,17 +3,22 @@ package com.api.sysbarweb.dto;
 import com.api.sysbarweb.model.Cargo;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Funcionario;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public record FuncionarioDto(
         Long cdFuncionario,
+
+        String nome,
         String caminhoImagem,
         String telefone,
         String login,
         String senha,
         String snAtivo,
+        @NotNull(message = "o campo RG é obrigatório!")
         String nrRg,
+        @NotNull(message = "o campo CPF é obrigatório!")
         String nrCpf,
         String nrCnh,
         String observacao,
@@ -27,6 +32,7 @@ public record FuncionarioDto(
 ) {
     public FuncionarioDto(Funcionario f){
         this(f.getCdFuncionario(),
+                f.getNome(),
                 f.getCaminhoImagem(),
                 f.getTelefone(),
                 f.getLogin(),
