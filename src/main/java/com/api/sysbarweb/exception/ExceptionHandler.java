@@ -1,5 +1,6 @@
 package com.api.sysbarweb.exception;
 
+import com.api.sysbarweb.model.Produto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,15 @@ public class ExceptionHandler {
     }
     @org.springframework.web.bind.annotation.ExceptionHandler(FuncionarioException.class)
     public ResponseEntity<StandardError>funcionarioExcelption (FuncionarioException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "CargoException",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(ProdutoException.class)
+    public ResponseEntity<StandardError>funcionarioExcelption (ProdutoException ex, HttpServletRequest request){
         StandardError error = new StandardError(System.currentTimeMillis(),
                 HttpStatus.BAD_REQUEST.value(),
                 "CargoException",
