@@ -59,7 +59,17 @@ public class ExceptionHandler {
     public ResponseEntity<StandardError>funcionarioExcelption (ProdutoException ex, HttpServletRequest request){
         StandardError error = new StandardError(System.currentTimeMillis(),
                 HttpStatus.BAD_REQUEST.value(),
-                "CargoException",
+                "ProdutoException",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(MesaException.class)
+    public ResponseEntity<StandardError>mesaException (MesaException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "MesaException",
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FOUND).body(error);

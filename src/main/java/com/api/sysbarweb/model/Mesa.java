@@ -1,5 +1,6 @@
 package com.api.sysbarweb.model;
 
+import com.api.sysbarweb.dto.MesaDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,13 @@ public class Mesa {
 
     public Mesa(){
 
+    }
+
+    public Mesa(MesaDto dto){
+        this.cdMesa = dto.cdMesa();
+        this.nrMesa = dto.nrMesa();
+        this.empresa = dto.empresa();
+        this.funcionario = dto.funcionario();
     }
 
     public Long getCdMesa() {
