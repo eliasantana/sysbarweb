@@ -13,7 +13,7 @@ public record MesaDto(
 
          Funcionario funcionario
 ) {
-    MesaDto(Mesa m){
+    public MesaDto(Mesa m){
        this(m.getCdMesa(), m.getNrMesa(), m.getEmpresa(), m.getFuncionario());
     }
     }
