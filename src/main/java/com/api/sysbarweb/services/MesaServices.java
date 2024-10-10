@@ -48,12 +48,15 @@ public class MesaServices {
 
     public ResponseEntity<MesaDto> adicionar(Long idemplogada, int nrmesa, Long idfuncionario, UriComponentsBuilder builder) {
         Optional<Empresa> emp= empresaRepository.getEmpresa(idemplogada);
+        if(repository.existeMesa(idemplogada, nrmesa).isPresent()){
+            throw new MesaException("A mesa informada já existe");
+        }
         if(emp.isEmpty()){
             throw new EmpresaException("A empresa informada não localizda!");
         }
         List<Funcionario> funcionario=funcionarioResponsitory.localizarFuncionario(idemplogada, idfuncionario) ;
         if (funcionario.isEmpty()){
-             throw new FuncionarioException("O funcionário informado não foi localizado!");
+             throw new FuncionarioException("O funcionário informado não foi localizado na empresa logada!");
         }
         Funcionario f = funcionario.get(0);
         if (!f.getCargo().getDsCargo().equals("Garçom")){
@@ -65,7 +68,8 @@ public class MesaServices {
         m.setNrMesa(nrmesa);
         m.setEmpresa(e);
         m.setFuncionario(f);
-        URI uri=builder.path("/mesa/listar/{idmesa}").buildAndExpand(m.getCdMesa()).toUri();
+        Mesa mesaSalva =repository.save(m);
+        URI uri=builder.path("/mesa/listar/{idmesa}").buildAndExpand(new MesaDto(mesaSalva).cdMesa()).toUri();
         return ResponseEntity.created(uri).build();
     }
 }

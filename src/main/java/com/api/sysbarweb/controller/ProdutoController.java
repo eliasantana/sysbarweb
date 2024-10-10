@@ -1,8 +1,8 @@
 package com.api.sysbarweb.controller;
 
 import com.api.sysbarweb.dto.ProdutoDto;
+import com.api.sysbarweb.dto.ProdutoEstoqueDto;
 import com.api.sysbarweb.services.ProdutoServices;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,4 +39,11 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDto>altear(@RequestBody ProdutoDto dto){
         return services.alterar(dto);
     }
+
+    @PostMapping("/adicionaestoque/{idemplogada}")
+    public ResponseEntity<ProdutoEstoqueDto>adicionarProdutoEstoque(@PathVariable Long idemplogada, @RequestBody ProdutoEstoqueDto dto, UriComponentsBuilder builder){
+        return services.adicionarProdutoEstoque(idemplogada,dto, builder);
+    }
+
+
 }

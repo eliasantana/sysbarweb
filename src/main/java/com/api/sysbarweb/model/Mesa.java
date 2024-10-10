@@ -1,6 +1,7 @@
 package com.api.sysbarweb.model;
 
 import com.api.sysbarweb.dto.MesaDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,9 +11,11 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdMesa;
     private  int nrMesa;
+    @Transient
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
+    @Transient
     @ManyToOne
     @JoinColumn(name = "cd_funcionario")
     private Funcionario funcionario;

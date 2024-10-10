@@ -74,4 +74,22 @@ public class ExceptionHandler {
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FOUND).body(error);
     }
+    @org.springframework.web.bind.annotation.ExceptionHandler(EstoqueException.class)
+    public ResponseEntity<StandardError>funcionarioExcelption (EstoqueException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "CargoException",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(ProdutoEstoqueException.class)
+    public ResponseEntity<StandardError>funcionarioExcelption (ProdutoEstoqueException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "CargoException",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
 }

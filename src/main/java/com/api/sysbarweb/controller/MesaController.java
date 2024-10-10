@@ -20,7 +20,7 @@ public class MesaController {
         return services.listarTodas(idempresa);
     }
 
-    @PostMapping
+    @PostMapping("/adicionar/{idemplogada}/{nrmesa}/{idfuncionario}")
     public ResponseEntity<MesaDto>adicionar(@PathVariable Long idemplogada,
                                             @PathVariable int nrmesa,
                                             @PathVariable Long idfuncionario,
