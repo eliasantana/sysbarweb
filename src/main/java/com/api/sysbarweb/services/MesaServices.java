@@ -10,6 +10,7 @@ import com.api.sysbarweb.model.Mesa;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import com.api.sysbarweb.repository.FuncionarioResponsitory;
 import com.api.sysbarweb.repository.MesaRepository;
+import org.hibernate.dialect.function.ListaggFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,8 @@ public class MesaServices {
     @Autowired
     EmpresaRepository empresaRepository;
 
+    @Autowired
+    UtilsServices utilsServices;
     @Autowired
     FuncionarioResponsitory funcionarioResponsitory;
 
@@ -72,4 +75,14 @@ public class MesaServices {
         URI uri=builder.path("/mesa/listar/{idmesa}").buildAndExpand(new MesaDto(mesaSalva).cdMesa()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    public ResponseEntity<List<MesaDto>> listarMesasGarcom(Long idemplogada, Long idfuncionario) {
+        Optional<Empresa> empresaLocalizada=utilsServices.validaEmpresaLogada(idemplogada);
+        List<Funcionario> funcinario=utilsServices.validaFuncionario(idemplogada, idfuncionario);
+        List<Mesa> mesas=repository.listarMesaGarcom(idemplogada, idfuncionario);
+        List<MesaDto> mesasDto=mesas.stream().map(MesaDto::new).toList();
+        return ResponseEntity.ok(mesasDto);
+    }
+
+
 }

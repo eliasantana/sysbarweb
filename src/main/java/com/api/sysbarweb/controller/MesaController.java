@@ -1,6 +1,7 @@
 package com.api.sysbarweb.controller;
 
 import com.api.sysbarweb.dto.MesaDto;
+import com.api.sysbarweb.model.Mesa;
 import com.api.sysbarweb.services.MesaServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +27,11 @@ public class MesaController {
                                             @PathVariable Long idfuncionario,
                                             UriComponentsBuilder builder){
         return services.adicionar(idemplogada, nrmesa, idfuncionario, builder);
+    }
+
+    @GetMapping("/garcom/{idemplogada}/{idfuncionario}")
+    public ResponseEntity<List<MesaDto>>listarMesasPorGarcon(@PathVariable Long idemplogada,
+                                                             @PathVariable Long idfuncionario){
+        return services.listarMesasGarcom(idemplogada, idfuncionario);
     }
 }

@@ -1,16 +1,20 @@
 package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.exception.EmpresaException;
+import com.api.sysbarweb.exception.FuncionarioException;
 import com.api.sysbarweb.exception.ProdutoException;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Estoque;
+import com.api.sysbarweb.model.Funcionario;
 import com.api.sysbarweb.model.Produto;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import com.api.sysbarweb.repository.EstoqueRepository;
+import com.api.sysbarweb.repository.FuncionarioResponsitory;
 import com.api.sysbarweb.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,7 +22,7 @@ import java.util.Optional;
 public class UtilsServices {
 
     @Autowired
-    FuncionarioServices funcionarioServices;
+    FuncionarioResponsitory funcionarioResponsitory;
 
     @Autowired
     EmpresaRepository empresaRepository;
@@ -57,5 +61,14 @@ public class UtilsServices {
             throw new ProdutoException("O produto informado não foi lodalizado!");
         }
        return produto;
+    }
+
+    public List<Funcionario> validaFuncionario(Long idEmpLogada, Long idfuncionario) {
+       List<Funcionario> f= funcionarioResponsitory.localizarFuncionario(idEmpLogada,idfuncionario);
+       if (f.isEmpty()){
+           throw new FuncionarioException("O funcionário informado não existe!");
+       }else{
+           return f;
+       }
     }
 }

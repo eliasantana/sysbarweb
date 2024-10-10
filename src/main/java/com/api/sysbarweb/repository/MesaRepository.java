@@ -15,4 +15,6 @@ public interface MesaRepository extends CrudRepository<Mesa, Long> {
     List<Mesa> listarTodas(Long idempresa);
     @Query(value = "select * from mesa where cd_empresa=:idemplogada and nr_mesa=:nrmesa", nativeQuery = true)
     Optional<Mesa> existeMesa(Long idemplogada, int nrmesa);
+    @Query(value = "select * from mesa where cd_empresa=:idemplogada and cd_funcionario=:idfuncionario", nativeQuery = true)
+    List<Mesa> listarMesaGarcom(Long idemplogada, Long idfuncionario);
 }
