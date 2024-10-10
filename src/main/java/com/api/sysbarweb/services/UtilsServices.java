@@ -3,10 +3,7 @@ package com.api.sysbarweb.services;
 import com.api.sysbarweb.exception.EmpresaException;
 import com.api.sysbarweb.exception.FuncionarioException;
 import com.api.sysbarweb.exception.ProdutoException;
-import com.api.sysbarweb.model.Empresa;
-import com.api.sysbarweb.model.Estoque;
-import com.api.sysbarweb.model.Funcionario;
-import com.api.sysbarweb.model.Produto;
+import com.api.sysbarweb.model.*;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import com.api.sysbarweb.repository.EstoqueRepository;
 import com.api.sysbarweb.repository.FuncionarioResponsitory;
@@ -70,5 +67,15 @@ public class UtilsServices {
        }else{
            return f;
        }
+    }
+
+    public boolean existMesa(List<Mesa> mesas, int nrMesa) {
+        Boolean resp = false;
+        for (int i = 0; i < mesas.size() ; i++) {
+            if (mesas.get(i).getNrMesa()==nrMesa){
+                resp=true;
+            }
+        }
+        return resp;
     }
 }

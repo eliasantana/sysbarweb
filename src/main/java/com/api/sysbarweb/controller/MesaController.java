@@ -34,4 +34,13 @@ public class MesaController {
                                                              @PathVariable Long idfuncionario){
         return services.listarMesasGarcom(idemplogada, idfuncionario);
     }
+
+    @PostMapping("/intervalo/{idemplogada}/{nrmesainicial}/{nrmesafinal}/{idfuncionario}")
+    public ResponseEntity<List<MesaDto>>intervaloMesa(@PathVariable Long idemplogada,
+                                                      @PathVariable Long nrmesainicial,
+                                                      @PathVariable Long nrmesafinal,
+                                                      @PathVariable Long idfuncionario){
+
+        return services.intervaloMesa(idemplogada, nrmesainicial, nrmesafinal,idfuncionario);
+    }
 }

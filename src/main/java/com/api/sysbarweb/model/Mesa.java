@@ -11,11 +11,9 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdMesa;
     private  int nrMesa;
-    @Transient
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
-    @Transient
     @ManyToOne
     @JoinColumn(name = "cd_funcionario")
     private Funcionario funcionario;

@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 public record MesaDto(
          Long cdMesa,
          int nrMesa,
+
          Empresa empresa,
 
          Funcionario funcionario
