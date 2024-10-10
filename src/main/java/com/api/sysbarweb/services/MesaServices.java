@@ -10,10 +10,8 @@ import com.api.sysbarweb.model.Mesa;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import com.api.sysbarweb.repository.FuncionarioResponsitory;
 import com.api.sysbarweb.repository.MesaRepository;
-import org.hibernate.dialect.function.ListaggFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,6 +34,9 @@ public class MesaServices {
     UtilsServices utilsServices;
     @Autowired
     FuncionarioResponsitory funcionarioResponsitory;
+
+    @Autowired
+    MesaRepository mesaRepository;
 
     public ResponseEntity<List<MesaDto>> listarTodas(Long idempresa) {
        Optional<Empresa> emp= empresaRepository.getEmpresa(idempresa);
@@ -114,5 +115,24 @@ public class MesaServices {
         List<MesaDto> mesasDtos = intervaloMesa.stream().map(MesaDto::new).toList();
         return ResponseEntity.ok(mesasDtos);
 
+    }
+
+    public ResponseEntity<MesaDto> alterarAlteraGarcom(Long idemplogada,int nrmesa , Long idnovocarcom) {
+        Optional<Empresa> emp= utilsServices.validaEmpresaLogada(idemplogada);
+        List<Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada, idnovocarcom);
+        utilsServices.validaMesa(idemplogada, nrmesa);
+        if (!"Garçom".equals(funcionario.get(0).getCargo().getDsCargo())){
+            throw new FuncionarioException("O Funcionário informado não é um Garçom!");
+        }
+        Optional<Mesa> mesa = mesaRepository.existeMesa(idemplogada, nrmesa);
+        if (mesa.isEmpty()){
+            throw new FuncionarioException("A mesa informada não foi localizada!");
+        }
+       mesa.get().setFuncionario(funcionario.get(0));
+       mesa.get().setEmpresa(emp.get());
+       if (mesa.get().getFuncionario().getCdFuncionario() !=idnovocarcom){
+           mesaRepository.save(mesa.get());
+       }
+       return ResponseEntity.ok().build();
     }
 }

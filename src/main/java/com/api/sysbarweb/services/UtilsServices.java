@@ -2,15 +2,14 @@ package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.exception.EmpresaException;
 import com.api.sysbarweb.exception.FuncionarioException;
+import com.api.sysbarweb.exception.MesaException;
 import com.api.sysbarweb.exception.ProdutoException;
 import com.api.sysbarweb.model.*;
-import com.api.sysbarweb.repository.EmpresaRepository;
-import com.api.sysbarweb.repository.EstoqueRepository;
-import com.api.sysbarweb.repository.FuncionarioResponsitory;
-import com.api.sysbarweb.repository.ProdutoRepository;
+import com.api.sysbarweb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,8 @@ public class UtilsServices {
     @Autowired
     ProdutoRepository produtoRepository;
 
-
+    @Autowired
+    MesaRepository mesaRepository;
 
 
     public Optional<Empresa> validaEmpresaLogada(Long idemplogada){
@@ -77,5 +77,16 @@ public class UtilsServices {
             }
         }
         return resp;
+    }
+
+    public Boolean validaMesa(Long idemplogada, int nrmesa){
+        Boolean resp = false;
+       Optional<Mesa> m= mesaRepository.existeMesa(idemplogada, nrmesa);
+       if(m.isEmpty()){
+           throw  new MesaException("A mesa infomradanão exise na empresa logada!");
+       }else{
+           resp=true;
+       }
+       return resp;
     }
 }
