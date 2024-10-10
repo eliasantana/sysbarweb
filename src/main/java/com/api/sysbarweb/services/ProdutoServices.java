@@ -1,12 +1,21 @@
 package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.ProdutoDto;
+import com.api.sysbarweb.dto.ProdutoEstoqueDto;
+import com.api.sysbarweb.exception.EstoqueException;
 import com.api.sysbarweb.exception.ProdutoException;
+import com.api.sysbarweb.model.Empresa;
+import com.api.sysbarweb.model.Estoque;
 import com.api.sysbarweb.model.Produto;
+import com.api.sysbarweb.model.ProdutoEstoque;
+import com.api.sysbarweb.repository.EstoqueRepository;
+import com.api.sysbarweb.repository.ProdutoEstoqueRepository;
 import com.api.sysbarweb.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.swing.text.html.Option;
@@ -19,6 +28,13 @@ import java.util.stream.Collectors;
 public class ProdutoServices {
     @Autowired
     ProdutoRepository repository;
+    @Autowired
+    ProdutoEstoqueRepository produtoEstoqueRepository;
+    @Autowired
+    UtilsServices utilsServices;
+    @Autowired
+    EstoqueRepository estoqueRepository;
+
 
     public ResponseEntity<ProdutoServices> adicionar(ProdutoDto dto, UriComponentsBuilder builder) {
         Optional<Produto> produtoLocalizado = repository.localizarProdutoPorDescricao(dto.dsProduto());
@@ -73,4 +89,15 @@ public class ProdutoServices {
         Produto produtoSalvo = repository.save(p);
         return ResponseEntity.ok(dto);
     }
+
+    public ResponseEntity<ProdutoEstoqueDto> adicionarProdutoEstoque(Long idemplogada, ProdutoEstoqueDto dto,UriComponentsBuilder builder) {
+        Optional<Estoque> estoque = utilsServices.validaEstoque(dto.estoque().getCdEstoque(),idemplogada);
+        Optional<Produto> produto = utilsServices.validaProduto(dto.produto().getCdProduto(),idemplogada);
+        Optional<Empresa> emplogada = utilsServices.validaEmpresaLogada(idemplogada);
+        ProdutoEstoque pe = new ProdutoEstoque(dto);
+        ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(pe);
+        URI uri = builder.path("produt/estoque/lsitar/{id}").buildAndExpand(produtoEstoqueSalvo.getProduto().getCdProduto()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
 }
