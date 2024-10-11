@@ -54,9 +54,9 @@ public class EstoqueServices {
         return ResponseEntity.ok(new EstoqueDto(e));
     }
 
-    public ResponseEntity<List<ProdutoDto>> listarProdutoEstoque(Long idestoque) {
+    public ResponseEntity<List<ProdutoEstoqueDto>> listarProdutoEstoque(Long idestoque) {
         List<ProdutoEstoque> produtos= produtoEstoqueRepository.listarProdutos(idestoque);
-        List<ProdutoDto>lstp = produtos.stream().map(pe -> new ProdutoDto(pe.getProduto())).collect(Collectors.toList());
+        List<ProdutoEstoqueDto>lstp = produtos.stream().map(ProdutoEstoqueDto::new).collect(Collectors.toList());
         return ResponseEntity.ok(lstp);
     }
 }

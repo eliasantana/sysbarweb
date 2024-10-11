@@ -2,7 +2,6 @@ package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.ProdutoDto;
 import com.api.sysbarweb.dto.ProdutoEstoqueDto;
-import com.api.sysbarweb.exception.EstoqueException;
 import com.api.sysbarweb.exception.ProdutoException;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Estoque;
@@ -14,11 +13,8 @@ import com.api.sysbarweb.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.swing.text.html.Option;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
