@@ -2,6 +2,7 @@ package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.ProdutoDto;
 import com.api.sysbarweb.dto.ProdutoEstoqueDto;
+import com.api.sysbarweb.exception.ProdutoEstoqueException;
 import com.api.sysbarweb.exception.ProdutoException;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Estoque;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -87,12 +89,29 @@ public class ProdutoServices {
     }
 
     public ResponseEntity<ProdutoEstoqueDto> adicionarProdutoEstoque(Long idemplogada, ProdutoEstoqueDto dto,UriComponentsBuilder builder) {
-        Optional<Estoque> estoque = utilsServices.validaEstoque(dto.estoque().getCdEstoque(),idemplogada);
-        Optional<Produto> produto = utilsServices.validaProduto(dto.produto().getCdProduto(),idemplogada);
+        if(dto.qtd()<=0){
+            throw new ProdutoEstoqueException("O produto não pode ser incluído com quantidade zerada!");
+        }
         Optional<Empresa> emplogada = utilsServices.validaEmpresaLogada(idemplogada);
-        ProdutoEstoque pe = new ProdutoEstoque(dto);
-        ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(pe);
-        URI uri = builder.path("produt/estoque/lsitar/{id}").buildAndExpand(produtoEstoqueSalvo.getProduto().getCdProduto()).toUri();
+        Optional<Estoque> estoque = utilsServices.validaEstoque(dto.estoque().getCdEstoque(),idemplogada);
+        Optional<Produto> produto = utilsServices.validaProduto(dto.produto().getCdProduto());
+        Optional<ProdutoEstoque> produtoEstoqueLocalizado = utilsServices.validaProdutoEstoque(estoque.get().getCdEstoque(), produto.get().getCdProduto());
+        URI uri = null;
+        if (produtoEstoqueLocalizado.isEmpty()){
+            ProdutoEstoque pe = new ProdutoEstoque(dto);
+            if(pe.getDtInclusao()==null){
+                pe.setDtInclusao(LocalDate.now());
+            }
+            pe.setEstoque(estoque.get());
+            pe.setProduto(produto.get());
+            ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(pe);
+            uri = builder.path("produt/estoque/lsitar/{id}").buildAndExpand(produtoEstoqueSalvo.getProduto().getCdProduto()).toUri();
+        }else{
+            ProdutoEstoque produtoEstoqueAtual = produtoEstoqueLocalizado.get();
+            produtoEstoqueAtual.setQtd(produtoEstoqueAtual.getQtd() + dto.qtd());
+            ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(produtoEstoqueAtual);
+            uri = builder.path("produt/estoque/lsitar/{id}").buildAndExpand(produtoEstoqueSalvo.getProduto().getCdProduto()).toUri();
+        }
         return ResponseEntity.created(uri).build();
     }
 
