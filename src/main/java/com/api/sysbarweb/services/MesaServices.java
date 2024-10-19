@@ -73,6 +73,7 @@ public class MesaServices {
         m.setNrMesa(nrmesa);
         m.setEmpresa(e);
         m.setFuncionario(f);
+        m.setStatus("L");
         Mesa mesaSalva =repository.save(m);
         URI uri=builder.path("/mesa/listar/{idmesa}").buildAndExpand(new MesaDto(mesaSalva).cdMesa()).toUri();
         return ResponseEntity.created(uri).build();
@@ -106,6 +107,7 @@ public class MesaServices {
                      m.setNrMesa(i);
                      m.setEmpresa(empresaLocalizada.get());
                      m.setFuncionario(funcinario.get(0));
+                     m.setStatus("L");// L=Livre
                      intervaloMesa.add(m);
                  }
         }
