@@ -2,11 +2,13 @@ package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.FuncionarioDto;
 import com.api.sysbarweb.dto.PedidoDto;
+import com.api.sysbarweb.exception.PedidoException;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Funcionario;
 import com.api.sysbarweb.model.Mesa;
 import com.api.sysbarweb.model.Pedido;
 import com.api.sysbarweb.repository.PedidoRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoServices {
@@ -49,5 +52,14 @@ public class PedidoServices {
         URI uri = builder.path("/pedido/listar/{}").buildAndExpand(new PedidoDto(pedidosalvo).cdPedido()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    public ResponseEntity<List<PedidoDto>> listar(Long idemplogada) {
+       List<Pedido> pedidosLocalizadao = repository.listar(idemplogada);
+       if (pedidosLocalizadao.isEmpty()){
+           throw new PedidoException("O pedido informado não foi localizado!");
+       }
+       List<PedidoDto> pedidosDto = pedidosLocalizadao.stream().map(PedidoDto::new).toList();
+        return ResponseEntity.ok(pedidosDto);
     }
 }
