@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "pedido")
@@ -22,6 +23,9 @@ public class Pedido {
     private BigDecimal totalPedido;
     @NotNull
     private Long cdMesa;
+
+    @OneToMany(mappedBy = "cd_it_pedido")
+    private List<ItPedido>itens;
 
     public Pedido(){
         this.dtInclusao = LocalDate.now();
