@@ -4,6 +4,7 @@ import com.api.sysbarweb.dto.ItPedidoDto;
 import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -14,8 +15,17 @@ public class ItPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdItPedido;
     private LocalDate dtInclusao;
+    @ManyToOne
+    @JoinColumn(name = "cd_pedido")
     private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "cd_produto")
     private Produto produto;
+
+    private int qtd;
+
+    private BigDecimal vlUnit;
 
     public ItPedido(){
         this.dtInclusao = LocalDate.now();
@@ -26,6 +36,8 @@ public class ItPedido {
         this.dtInclusao = dto.dtInclusao();
         this.pedido = dto.pedido();
         this.produto = dto.produto();
+        this.qtd = dto.qtd();
+        this.vlUnit = dto.vlUnit();
     }
 
     public Long getCdItPedido() {
@@ -58,5 +70,21 @@ public class ItPedido {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public void setQtd(int qtd) {
+        this.qtd = qtd;
+    }
+
+    public int getQtd() {
+        return qtd;
+    }
+
+    public void setVlUnit(BigDecimal vlUnit) {
+        this.vlUnit = vlUnit;
+    }
+
+    public BigDecimal getVlUnit() {
+        return vlUnit;
     }
 }

@@ -23,10 +23,6 @@ public class Pedido {
     private BigDecimal totalPedido;
     @NotNull
     private Long cdMesa;
-
-    @OneToMany(mappedBy = "cd_it_pedido")
-    private List<ItPedido>itens;
-
     public Pedido(){
         this.dtInclusao = LocalDate.now();
         this.totalPedido = BigDecimal.ZERO;
