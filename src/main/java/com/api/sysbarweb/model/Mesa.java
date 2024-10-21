@@ -18,6 +18,8 @@ public class Mesa {
     @JoinColumn(name = "cd_funcionario")
     private Funcionario funcionario;
 
+    private String status;
+
     public Mesa(){
 
     }
@@ -27,6 +29,7 @@ public class Mesa {
         this.nrMesa = dto.nrMesa();
         this.empresa = dto.empresa();
         this.funcionario = dto.funcionario();
+        this.status = dto.status();
     }
 
     public Long getCdMesa() {
@@ -59,5 +62,13 @@ public class Mesa {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

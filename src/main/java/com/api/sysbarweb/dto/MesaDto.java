@@ -12,9 +12,11 @@ public record MesaDto(
 
          Empresa empresa,
 
-         Funcionario funcionario
+         Funcionario funcionario,
+
+         String status
 ) {
     public MesaDto(Mesa m){
-       this(m.getCdMesa(), m.getNrMesa(), m.getEmpresa(), m.getFuncionario());
+       this(m.getCdMesa(), m.getNrMesa(), m.getEmpresa(), m.getFuncionario(), m.getStatus());
     }
     }

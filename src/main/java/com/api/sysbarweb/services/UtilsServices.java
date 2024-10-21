@@ -1,9 +1,6 @@
 package com.api.sysbarweb.services;
 
-import com.api.sysbarweb.exception.EmpresaException;
-import com.api.sysbarweb.exception.FuncionarioException;
-import com.api.sysbarweb.exception.MesaException;
-import com.api.sysbarweb.exception.ProdutoException;
+import com.api.sysbarweb.exception.*;
 import com.api.sysbarweb.model.*;
 import com.api.sysbarweb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +93,14 @@ public class UtilsServices {
     public Optional <ProdutoEstoque> validaProdutoEstoque(Long cdEstoque, Long cdProduto) {
         return produtoEstoqueRepository.validaProdutoEstoque(cdEstoque, cdProduto);
 
+    public Mesa validaMesa(Optional<Mesa> mesa){
+        if (mesa.isEmpty()){
+            throw  new MesaException("A mesa infomradanão não existe na empresa logada!");
+        }
+        if(!mesa.get().getStatus().equals("L")){
+            throw  new PedidoException("A mesa infomradanão não está Disponível!");
+        }
+        Optional<Mesa> m= mesaRepository.existeMesa(mesa.get().getCdMesa());
+        return m.get();
     }
 }
