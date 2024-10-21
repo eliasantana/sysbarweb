@@ -29,6 +29,9 @@ public class UtilsServices {
     @Autowired
     MesaRepository mesaRepository;
 
+    @Autowired
+    ProdutoEstoqueRepository produtoEstoqueRepository;
+
 
     public Optional<Empresa> validaEmpresaLogada(Long idemplogada){
         Optional<Empresa> empresaLocalizada = empresaRepository.getEmpresa(idemplogada);
@@ -49,8 +52,8 @@ public class UtilsServices {
     /**
      * Valida se o produto informado existe cadastrado na base
      * */
-    public Optional<Produto>validaProduto(Long idemplogada, Long idproduto){
-        Optional<Produto> produto =produtoRepository.localizar(idemplogada, idproduto);
+    public Optional<Produto>validaProduto(Long idproduto){
+        Optional<Produto> produto =produtoRepository.localizar(idproduto);
         if (produto.isEmpty()){
             throw new ProdutoException("O produto informado não foi lodalizado!");
         }
@@ -86,6 +89,10 @@ public class UtilsServices {
        }
        return resp;
     }
+
+    public Optional <ProdutoEstoque> validaProdutoEstoque(Long cdEstoque, Long cdProduto) {
+        return produtoEstoqueRepository.validaProdutoEstoque(cdEstoque, cdProduto);
+
     public Mesa validaMesa(Optional<Mesa> mesa){
         if (mesa.isEmpty()){
             throw  new MesaException("A mesa infomradanão não existe na empresa logada!");

@@ -41,9 +41,14 @@ public class ProdutoController {
     }
 
     @PostMapping("/adicionaestoque/{idemplogada}")
-    public ResponseEntity<ProdutoEstoqueDto>adicionarProdutoEstoque(@PathVariable Long idemplogada, @RequestBody ProdutoEstoqueDto dto, UriComponentsBuilder builder){
+    public ResponseEntity<ProdutoEstoqueDto>adicionarProdutoEstoque(@PathVariable Long idemplogada,
+                                                                    @RequestBody ProdutoEstoqueDto dto,
+                                                                    UriComponentsBuilder builder){
         return services.adicionarProdutoEstoque(idemplogada,dto, builder);
     }
+
+
+
 
 
 }

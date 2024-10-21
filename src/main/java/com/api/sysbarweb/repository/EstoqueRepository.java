@@ -1,6 +1,7 @@
 package com.api.sysbarweb.repository;
 
 import com.api.sysbarweb.model.Estoque;
+import com.api.sysbarweb.model.ProdutoEstoque;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,8 @@ public interface EstoqueRepository extends CrudRepository<Estoque, Long> {
     @Query(value = "Select * from estoque where cd_empresa=:idemplogada",nativeQuery = true)
     List<Estoque> listar(Long idemplogada);
 
-    @Query(value = "Select * from estoque where cd_empresa=:idemplogada and cd_estoque=:idestoque and sn_ativo='S'",nativeQuery = true)
+    @Query(value = "Select * from estoque where cd_empresa=:idemplogada and cd_estoque=:idestoque",nativeQuery = true)
     Optional<Estoque> localizar(Long idemplogada, Long idestoque);
+
+
 }
