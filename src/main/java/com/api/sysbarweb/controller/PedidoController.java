@@ -1,5 +1,6 @@
 package com.api.sysbarweb.controller;
 
+import com.api.sysbarweb.dto.ItPedidoDto;
 import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.services.PedidoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,18 @@ public class PedidoController {
     public ResponseEntity<List<PedidoDto>>listar(@PathVariable Long idemplogada){
         return services.listar(idemplogada);
     }
+
+    @GetMapping("/localizar/{idemplogada}/{idpedido}")
+    public ResponseEntity<List<ItPedidoDto>> localizar(@PathVariable Long idemplogada,
+                                                 @PathVariable Long idpedido){
+        return services.localizar(idemplogada, idpedido);
+
+    }
+    @PostMapping("/fechar/{idemplogada}/{idpedido}")
+    public ResponseEntity<PedidoDto>fechar(@PathVariable Long idemplogada,
+                                           @PathVariable Long idpedido){
+
+        return services.fecharPedido(idemplogada, idpedido);
+    }
+
 }
