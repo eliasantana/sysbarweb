@@ -1,5 +1,6 @@
 package com.api.sysbarweb.controller;
 
+import com.api.sysbarweb.dto.ItPedidoDto;
 import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.services.PedidoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,40 @@ public class PedidoController {
     public ResponseEntity<List<PedidoDto>>listar(@PathVariable Long idemplogada){
         return services.listar(idemplogada);
     }
+
+    @GetMapping("/localizar/{idemplogada}/{idpedido}")
+    public ResponseEntity<List<ItPedidoDto>> localizar(@PathVariable Long idemplogada,
+                                                 @PathVariable Long idpedido){
+        return services.localizar(idemplogada, idpedido);
+
+    }
+    @PostMapping("/fechar/{idemplogada}/{idpedido}")
+    public ResponseEntity<PedidoDto>fechar(@PathVariable Long idemplogada,
+                                           @PathVariable Long idpedido){
+
+        return services.fecharPedido(idemplogada, idpedido);
+    }
+
+    @PostMapping("/incluir/{idemlogada}/{idpedido}/{idproduto}/{qtd}")
+    public ResponseEntity<ItPedidoDto>incluir(@PathVariable Long idemlogada,
+                                              @PathVariable Long idpedido,
+                                              @PathVariable Long idproduto,
+                                              @PathVariable int  qtd){
+        return services.incluir(idemlogada, idpedido, idproduto,qtd);
+    }
+
+    @GetMapping("/listar/{idemplogada}/{idpedido}")
+    public ResponseEntity<List<ItPedidoDto>>listarItensPedido(@PathVariable Long idemplogada,
+                                                              @PathVariable Long idpedido){
+        return services.listarItensPedido(idemplogada, idpedido);
+    }
+    @PostMapping("/remover/{idemplogada}/{idpedido}")
+    public ResponseEntity<ItPedidoDto>removerItemPedido(@PathVariable Long idemplogada,
+                                                        @PathVariable Long idpedido,
+                                                        @RequestParam(name = "passwordadm")  int pasword,
+                                                        @RequestParam(name = "cditpedido")  Long cditem){
+
+        return services.removeItemPedido(idemplogada, idpedido, pasword, cditem);
+    }
+
 }

@@ -21,17 +21,21 @@ public class Pedido {
     @NotNull
     private Long cdFuncionario;
     private BigDecimal totalPedido;
+    private String statusPedido; // A -Aberto - F fechado
+
     @NotNull
     private Long cdMesa;
     public Pedido(){
         this.dtInclusao = LocalDate.now();
         this.totalPedido = BigDecimal.ZERO;
+        this.statusPedido = "A";
     }
 
     public Pedido(PedidoDto dto){
         this.cdPedido = dto.cdPedido();
         this.dtInclusao = dto.dtInclusao();
         this.totalPedido = dto.totalPedido();
+        this.statusPedido = dto.statusPedido();
 
     }
 
@@ -81,5 +85,13 @@ public class Pedido {
 
     public Long getCdMesa() {
         return cdMesa;
+    }
+
+    public void setStatusPedido(String statusPedido) {
+        this.statusPedido = statusPedido;
+    }
+
+    public String getStatusPedido() {
+        return statusPedido;
     }
 }

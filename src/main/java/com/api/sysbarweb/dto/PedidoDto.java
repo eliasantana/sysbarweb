@@ -10,10 +10,11 @@ public record PedidoDto(
     Long cdPedido,
     LocalDate dtInclusao,
     BigDecimal totalPedido,
-    Long cdMesa
+    Long cdMesa,
+    String statusPedido
 ) {
     public PedidoDto(Pedido p){
 
-        this (p.getCdPedido(), p.getDtInclusao(), p.getTotalPedido(), p.getCdMesa());
+        this (p.getCdPedido(), p.getDtInclusao(), p.getTotalPedido(), p.getCdMesa(), p.getStatusPedido());
     }
 }

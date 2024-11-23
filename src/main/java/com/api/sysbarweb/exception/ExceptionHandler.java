@@ -101,4 +101,13 @@ public class ExceptionHandler {
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FOUND).body(error);
     }
+    @org.springframework.web.bind.annotation.ExceptionHandler(ItPedidoException.class)
+    public ResponseEntity<StandardError>funcionarioExcelption (ItPedidoException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "PedidoException",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
 }

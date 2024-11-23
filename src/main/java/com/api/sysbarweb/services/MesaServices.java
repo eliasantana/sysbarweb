@@ -123,6 +123,7 @@ public class MesaServices {
         Optional<Empresa> emp= utilsServices.validaEmpresaLogada(idemplogada);
         List<Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada, idnovocarcom);
         utilsServices.validaMesa(idemplogada, nrmesa);
+
         if (!"Garçom".equals(funcionario.get(0).getCargo().getDsCargo())){
             throw new FuncionarioException("O Funcionário informado não é um Garçom!");
         }
@@ -137,4 +138,5 @@ public class MesaServices {
        }
        return ResponseEntity.ok().build();
     }
+
 }
