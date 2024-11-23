@@ -1,17 +1,17 @@
 package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.ItPedidoDto;
-import com.api.sysbarweb.dto.MesaDto;
 import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.exception.PedidoException;
+import com.api.sysbarweb.exception.ProdutoException;
 import com.api.sysbarweb.model.*;
 import com.api.sysbarweb.repository.PedidoRepository;
+import com.api.sysbarweb.repository.ProdutoEstoqueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
@@ -30,25 +30,29 @@ public class PedidoServices {
 
     @Autowired
     ItPedidoServices itPedidoServices;
+
+    @Autowired
+    ProdutoEstoqueRepository produtoEstoqueRepository;
+
+    @Autowired
+    MovimentacaoServices movimentacaoServices;
     public ResponseEntity<PedidoDto> adicionar(Long idemplogada,
                                                Long idfuncionario,
                                                Long idemesa,
                                                UriComponentsBuilder builder) {
        Optional<Empresa> emp =utilsServices.validaEmpresaLogada(idemplogada);
        List<Funcionario> func = utilsServices.validaFuncionario(idemplogada, idfuncionario);
-       Optional<Mesa> mesa = mesaServices.mesaRepository.findById(idemesa);
-
-        Mesa m = utilsServices.validaMesa(mesa);
-
-        if (m.getStatus().equals("L")){
-            m.setStatus("O"); // O = Ocupada
-            mesaServices.mesaRepository.save(m);
+       //Optional<Mesa> mesa = mesaServices.mesaRepository.findById(idemesa);
+        Optional<Mesa> mesa = utilsServices.retornaMesa(idemplogada, Math.toIntExact(idemesa));
+        utilsServices.validaMesa(mesa);
+        if (mesa.get().getStatus().equals("L")){
+            mesa.get().setStatus("O"); // O = Ocupada
+            mesaServices.mesaRepository.save(mesa.get());
         }
-
         Pedido p = new Pedido();
         p.setCdEmpresa(emp.get().getCdEmpresa());
         p.setCdFuncionario(func.get(0).getCdFuncionario());
-        p.setCdMesa(m.getCdMesa());
+        p.setCdMesa(mesa.get().getCdMesa());
         p.setStatusPedido("A");
         Pedido pedidosalvo = repository.save(p);
         URI uri = builder.path("/pedido/listar/{}").buildAndExpand(new PedidoDto(pedidosalvo).cdPedido()).toUri();
@@ -68,8 +72,6 @@ public class PedidoServices {
     public ResponseEntity<List<ItPedidoDto>> localizar(Long idemplogada, Long idpedido) {
         return  itPedidoServices.localizar(idemplogada, idpedido);
     }
-
-
 
     public ResponseEntity<PedidoDto> fecharPedido(Long idemplogada, Long idpedido) {
         Optional<Pedido> pedido = utilsServices.validapedido(idemplogada, idpedido);
@@ -92,5 +94,70 @@ public class PedidoServices {
                 .map(item -> item.getVlUnit().multiply(BigDecimal.valueOf(item.getQtd())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
        return totalPedido;
+    }
+
+    public ResponseEntity<ItPedidoDto> incluir(Long idemlogada, Long idpedido, Long idproduto, int qtdSolicitada) {
+        Optional<Empresa> emp = utilsServices.validaEmpresaLogada(idemlogada);
+        Optional<Pedido> pedido =utilsServices.validapedido(idemlogada, idpedido);
+        Optional<ProdutoEstoque> produtoEstoque = utilsServices.validaNoProdutoEstoque(idemlogada, idproduto, qtdSolicitada);
+        ProdutoEstoque pe = produtoEstoque.get();
+        utilsServices.validaQuantidade(pe, qtdSolicitada);
+        ItPedido itPedido = new ItPedido();
+        itPedido.setQtd(qtdSolicitada);
+        itPedido.setPedido(pedido.get());
+        itPedido.setProduto(produtoEstoque.get().getProduto());
+        itPedido.setVlUnit(produtoEstoque.get().getVlVenda());
+        ItPedido item = itPedidoServices.adicioar(itPedido);
+        int qtd = produtoEstoque.get().getQtd() - itPedido.getQtd();
+        produtoEstoque.get().setQtd(qtd);
+        ProdutoEstoque produtoEstoqueSalvo = produtoEstoqueRepository.save(produtoEstoque.get());
+        //Registra a movimentação
+        if (produtoEstoqueSalvo.getCdProdutoEstoque()!=null){
+            Movimentacao movimentacao = new Movimentacao();
+            movimentacao.setDsProduto(produtoEstoque.get().getProduto().getDsProduto());
+            movimentacao.setCdProduto(produtoEstoque.get().getProduto().getCdProduto());
+            movimentacao.setCdPedido(idpedido);
+            movimentacao.setQtd(qtdSolicitada);
+            movimentacao.setTpMovimentacao("S");
+            movimentacao.setCdEstoque(produtoEstoqueSalvo.getEstoque().getCdEstoque());
+            movimentacao.setCdProdutoEstoque(produtoEstoqueSalvo.getCdProdutoEstoque());
+            movimentacaoServices.adicionaMovimentacao(movimentacao);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<List<ItPedidoDto>> listarItensPedido(Long idemplogada, Long idpedido) {
+        return itPedidoServices.localizar(idemplogada,idpedido);
+    }
+
+    public ResponseEntity<ItPedidoDto> removeItemPedido(Long idemplogada, Long idpedido, int pasword, Long cdItPedido) {
+        List<ItPedido> itensPedido;
+        if (utilsServices.validaSenhaAdministrativa(pasword)) {
+            Optional<Empresa> empresa = utilsServices.validaEmpresaLogada(idemplogada);
+            Optional<Pedido> pedido = utilsServices.validapedido(idemplogada, idpedido);
+            itensPedido = itPedidoServices.validaItemPedido(idemplogada, idpedido, cdItPedido);
+            Optional<Movimentacao> movimentacaoLocalizada = movimentacaoServices.localizaMovimentacao(pedido.get().getCdPedido(), itensPedido.get(0).getProduto().getCdProduto(), itensPedido.get(0).getQtd());
+
+            Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueRepository.validaProdutoEstoque(movimentacaoLocalizada.get().getCdEstoque(), movimentacaoLocalizada.get().getCdProduto());
+            //Devolvendo a quantidade da moviemntação para o estoque
+            produtoEstoque.get().setQtd(produtoEstoque.get().getQtd() + movimentacaoLocalizada.get().getQtd());
+            ProdutoEstoque pe = produtoEstoqueRepository.save(produtoEstoque.get());
+            //Registrar movimentação de Devolução "D"
+            itPedidoServices.repository.delete(itensPedido.get(0));
+            Movimentacao m = new Movimentacao();
+            m.setCdProdutoEstoque(pe.getCdProdutoEstoque());
+            m.setQtd(movimentacaoLocalizada.get().getQtd());
+            m.setTpMovimentacao("D"); // D - Devolução
+            m.setCdPedido(movimentacaoLocalizada.get().getCdPedido());
+            m.setDsProduto(movimentacaoLocalizada.get().getDsProduto());
+            m.setCdProduto(pe.getProduto().getCdProduto());
+            m.setCdEstoque(pe.getEstoque().getCdEstoque());
+            movimentacaoServices.repository.save(m);
+            //Registram em log
+        } else {
+            throw new ProdutoException("Senha inválida!");
+        }
+        return ResponseEntity.ok(new ItPedidoDto(itensPedido.get(0)));
     }
 }

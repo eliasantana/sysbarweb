@@ -4,10 +4,7 @@ import com.api.sysbarweb.dto.ProdutoDto;
 import com.api.sysbarweb.dto.ProdutoEstoqueDto;
 import com.api.sysbarweb.exception.ProdutoEstoqueException;
 import com.api.sysbarweb.exception.ProdutoException;
-import com.api.sysbarweb.model.Empresa;
-import com.api.sysbarweb.model.Estoque;
-import com.api.sysbarweb.model.Produto;
-import com.api.sysbarweb.model.ProdutoEstoque;
+import com.api.sysbarweb.model.*;
 import com.api.sysbarweb.repository.EstoqueRepository;
 import com.api.sysbarweb.repository.ProdutoEstoqueRepository;
 import com.api.sysbarweb.repository.ProdutoRepository;
@@ -32,6 +29,9 @@ public class ProdutoServices {
     UtilsServices utilsServices;
     @Autowired
     EstoqueRepository estoqueRepository;
+
+    @Autowired
+    MovimentacaoServices movimentacaoServices;
 
 
     public ResponseEntity<ProdutoServices> adicionar(ProdutoDto dto, UriComponentsBuilder builder) {
@@ -105,11 +105,14 @@ public class ProdutoServices {
             pe.setEstoque(estoque.get());
             pe.setProduto(produto.get());
             ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(pe);
+            movimentacaoServices.adicionaMovimentacao(produtoEstoqueSalvo, dto.qtd(), "E");
             uri = builder.path("produt/estoque/lsitar/{id}").buildAndExpand(produtoEstoqueSalvo.getProduto().getCdProduto()).toUri();
         }else{
             ProdutoEstoque produtoEstoqueAtual = produtoEstoqueLocalizado.get();
             produtoEstoqueAtual.setQtd(produtoEstoqueAtual.getQtd() + dto.qtd());
             ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(produtoEstoqueAtual);
+            //produtoEstoqueSalvo.setQtd(dto.qtd()); //Seta novamente a quatidade solicitada para registrar a quantidade correna na movimentação
+            movimentacaoServices.adicionaMovimentacao(produtoEstoqueSalvo, dto.qtd(),"E");
             uri = builder.path("produt/estoque/lsitar/{id}").buildAndExpand(produtoEstoqueSalvo.getProduto().getCdProduto()).toUri();
         }
         return ResponseEntity.created(uri).build();

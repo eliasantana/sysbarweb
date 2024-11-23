@@ -6,7 +6,7 @@ import com.api.sysbarweb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+import javax.swing.text.StyledEditorKit;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +66,7 @@ public class UtilsServices {
     public List<Funcionario> validaFuncionario(Long idEmpLogada, Long idfuncionario) {
         List<Funcionario> f = funcionarioResponsitory.localizarFuncionario(idEmpLogada, idfuncionario);
         if (f.isEmpty()) {
-            throw new FuncionarioException("O funcionário informado não existe!");
+            throw new FuncionarioException("O funcionário não localizado ou não pertence a empresa logada!");
         } else {
             return f;
         }
@@ -93,10 +93,31 @@ public class UtilsServices {
         return resp;
     }
 
+    public Optional<Mesa> retornaMesa(Long idemplogada, int nrmesa) {
+        Optional<Mesa> m = mesaRepository.existeMesa(idemplogada, nrmesa);
+        if (m.isEmpty()) {
+            throw new MesaException("Não foi possível localizar a mesa informada!");
+        }
+        return m;
+    }
+
+
     public Optional<ProdutoEstoque> validaProdutoEstoque(Long cdEstoque, Long cdProduto) {
         return produtoEstoqueRepository.validaProdutoEstoque(cdEstoque, cdProduto);
 
     }
+
+    public Optional<ProdutoEstoque> validaNoProdutoEstoque(Long idemplogada,Long cdProduto, int qtdsolicitada) {
+        Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueRepository.validaProdutoNoEstoque(idemplogada, cdProduto);
+        if (produtoEstoque.isEmpty()){
+            throw new ProdutoException("O produtoEstoque informado não foi localizado ou está zerado no estoque!");
+        }
+        if (produtoEstoque.get().getQtd() == 0 || produtoEstoque.get().getQtd() < qtdsolicitada){
+            throw new ProdutoException(String.format("Produto com quantidade insuficiente no estoque. O produtoEstoque %s possui apenas %s em estqque!",produtoEstoque.get().getProduto().getDsProduto(),produtoEstoque.get().getQtd()));
+        }
+        return produtoEstoque;
+    }
+
     public Mesa validaMesa(Optional<Mesa> mesa){
         if (mesa.isEmpty()){
             throw  new MesaException("A mesa infomradanão não existe na empresa logada!");
@@ -118,4 +139,26 @@ public class UtilsServices {
         }
         return pedido;
     }
+
+    public void validaQuantidade(ProdutoEstoque produtoEstoque, int qtdSolicitada) {
+
+        if (qtdSolicitada==0){
+            throw new PedidoException("Quantidade solicitada inválida. A quantidade não pode ser igual ou inferior a 0 (zero)");
+        }
+        if (produtoEstoque.getQtd()< qtdSolicitada){
+            throw new PedidoException("Quantidade insuficiente no estoque! O produto informado " + produtoEstoque.getProduto().getDsProduto() + " possui apenas " + produtoEstoque.getQtd() + " unidades no estoque!");
+        }
+    }
+
+    public Boolean validaSenhaAdministrativa(int pasword) {
+        //todo adicionar senha administrtiva criptografada no cadastro da empresa.
+        boolean resp=false;
+        int passwordAdm=202649;
+        if (pasword==passwordAdm){
+            resp=true;
+        }
+        return resp;
+    }
+
+
 }

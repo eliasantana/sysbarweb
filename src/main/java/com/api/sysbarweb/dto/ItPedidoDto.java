@@ -18,4 +18,7 @@ public record ItPedidoDto(
     public ItPedidoDto(ItPedido i){
         this(i.getCdItPedido(), i.getDtInclusao(), i.getPedido(), i.getProduto(), i.getQtd(),i.getVlUnit());
     }
+
+
+
 }

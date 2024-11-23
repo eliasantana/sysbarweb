@@ -46,4 +46,26 @@ public class PedidoController {
         return services.fecharPedido(idemplogada, idpedido);
     }
 
+    @PostMapping("/incluir/{idemlogada}/{idpedido}/{idproduto}/{qtd}")
+    public ResponseEntity<ItPedidoDto>incluir(@PathVariable Long idemlogada,
+                                              @PathVariable Long idpedido,
+                                              @PathVariable Long idproduto,
+                                              @PathVariable int  qtd){
+        return services.incluir(idemlogada, idpedido, idproduto,qtd);
+    }
+
+    @GetMapping("/listar/{idemplogada}/{idpedido}")
+    public ResponseEntity<List<ItPedidoDto>>listarItensPedido(@PathVariable Long idemplogada,
+                                                              @PathVariable Long idpedido){
+        return services.listarItensPedido(idemplogada, idpedido);
+    }
+    @PostMapping("/remover/{idemplogada}/{idpedido}")
+    public ResponseEntity<ItPedidoDto>removerItemPedido(@PathVariable Long idemplogada,
+                                                        @PathVariable Long idpedido,
+                                                        @RequestParam(name = "passwordadm")  int pasword,
+                                                        @RequestParam(name = "cditpedido")  Long cditem){
+
+        return services.removeItemPedido(idemplogada, idpedido, pasword, cditem);
+    }
+
 }
