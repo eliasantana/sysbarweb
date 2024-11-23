@@ -42,8 +42,7 @@ public class PedidoServices {
                                                UriComponentsBuilder builder) {
        Optional<Empresa> emp =utilsServices.validaEmpresaLogada(idemplogada);
        List<Funcionario> func = utilsServices.validaFuncionario(idemplogada, idfuncionario);
-       //Optional<Mesa> mesa = mesaServices.mesaRepository.findById(idemesa);
-        Optional<Mesa> mesa = utilsServices.retornaMesa(idemplogada, Math.toIntExact(idemesa));
+       Optional<Mesa> mesa = utilsServices.retornaMesa(idemplogada, Math.toIntExact(idemesa));
         utilsServices.validaMesa(mesa);
         if (mesa.get().getStatus().equals("L")){
             mesa.get().setStatus("O"); // O = Ocupada
@@ -55,7 +54,7 @@ public class PedidoServices {
         p.setCdMesa(mesa.get().getCdMesa());
         p.setStatusPedido("A");
         Pedido pedidosalvo = repository.save(p);
-        URI uri = builder.path("/pedido/listar/{}").buildAndExpand(new PedidoDto(pedidosalvo).cdPedido()).toUri();
+        URI uri = builder.path("/pedido/listar/{cdpedido}").buildAndExpand(new PedidoDto(pedidosalvo).cdPedido()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
@@ -154,10 +153,26 @@ public class PedidoServices {
             m.setCdProduto(pe.getProduto().getCdProduto());
             m.setCdEstoque(pe.getEstoque().getCdEstoque());
             movimentacaoServices.repository.save(m);
+            movimentacaoServices.repository.delete(movimentacaoLocalizada.get());
             //Registram em log
         } else {
             throw new ProdutoException("Senha inválida!");
         }
         return ResponseEntity.ok(new ItPedidoDto(itensPedido.get(0)));
+    }
+
+    public ResponseEntity<PedidoDto> cancelarPedido(Long idemplogada, Long idpedido) {
+        Optional<Pedido> p = utilsServices.validapedido(idemplogada,idpedido);
+        List<ItPedido> itensPedido= itPedidoServices.repository.localizar(idemplogada, idpedido);
+        if (!itensPedido.isEmpty()){
+            throw new PedidoException(String.format("O pedido %s não pode ser cancelado porque possui itens associados. Remova todos os itens antes de cancelar.",idpedido));
+        }
+        p.get().setStatusPedido("F");
+        Pedido pedidoSalvo = repository.save(p.get());
+        Mesa m = new Mesa();
+        m.setCdMesa(pedidoSalvo.getCdMesa());
+        m.setStatus("L");
+        mesaServices.repository.save(m);
+        return ResponseEntity.ok(new PedidoDto(p.get()));
     }
 }

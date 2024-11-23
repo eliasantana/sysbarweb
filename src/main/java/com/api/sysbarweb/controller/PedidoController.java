@@ -67,5 +67,11 @@ public class PedidoController {
 
         return services.removeItemPedido(idemplogada, idpedido, pasword, cditem);
     }
+    @PostMapping("/cancelar/{idemplogada}/{idpedido}")
+    public ResponseEntity<PedidoDto>cancelarPedido(@PathVariable Long idemplogada,
+                                                   @PathVariable Long idpedido){
+
+        return services.cancelarPedido(idemplogada, idpedido);
+    }
 
 }
