@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,9 @@ public class PedidoServices {
 
     @Autowired
     MovimentacaoServices movimentacaoServices;
+
+    @Autowired
+    CozinhaServices cozinhaServices;
     public ResponseEntity<PedidoDto> adicionar(Long idemplogada,
                                                Long idfuncionario,
                                                Long idemesa,
@@ -95,7 +99,7 @@ public class PedidoServices {
        return totalPedido;
     }
 
-    public ResponseEntity<ItPedidoDto> incluir(Long idemlogada, Long idpedido, Long idproduto, int qtdSolicitada) {
+    public ResponseEntity<ItPedidoDto> incluir(Long idemlogada, Long idpedido, Long idproduto, int qtdSolicitada, String observacao) {
         Optional<Empresa> emp = utilsServices.validaEmpresaLogada(idemlogada);
         Optional<Pedido> pedido =utilsServices.validapedido(idemlogada, idpedido);
         Optional<ProdutoEstoque> produtoEstoque = utilsServices.validaNoProdutoEstoque(idemlogada, idproduto, qtdSolicitada);
@@ -122,7 +126,23 @@ public class PedidoServices {
             movimentacao.setCdProdutoEstoque(produtoEstoqueSalvo.getCdProdutoEstoque());
             movimentacaoServices.adicionaMovimentacao(movimentacao);
         }
-
+        if (utilsServices.getChave("SN_ENVIA_COZINHA_AUTO").equalsIgnoreCase("S")){
+            List<Funcionario> funcionario = utilsServices.validaFuncionario(idemlogada, pedido.get().getCdFuncionario());
+            Optional<Mesa> mesa= mesaServices.getMesa(pedido.get().getCdMesa());
+            if (produtoEstoqueSalvo.getProduto().getTipo().equalsIgnoreCase("CO")){
+               Cozinha c = new Cozinha();
+               c.setCdProduto(idproduto);
+               c.setCdFuncionario(pedido.get().getCdFuncionario());
+               c.setCdPedido(idpedido);
+               c.setHoraSolicitacao(LocalDateTime.now());
+               c.setNmFuncionario(funcionario.get(0).getNome());
+               c.setStatus("P");
+               c.setNrMesa(mesa.get().getNrMesa());
+               c.setQtd(itPedido.getQtd());
+               c.setObservacao(observacao);
+               cozinhaServices.repository.save(c);
+            }
+        }
         return ResponseEntity.ok().build();
     }
 

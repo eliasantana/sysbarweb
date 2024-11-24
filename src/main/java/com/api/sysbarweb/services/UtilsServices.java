@@ -35,6 +35,9 @@ public class UtilsServices {
     @Autowired
     PedidoRepository pedidoRepository;
 
+    @Autowired
+    ParametrosGlobaisServices parametrosGlobaisServices;
+
 
     public Optional<Empresa> validaEmpresaLogada(Long idemplogada) {
         Optional<Empresa> empresaLocalizada = empresaRepository.getEmpresa(idemplogada);
@@ -160,5 +163,8 @@ public class UtilsServices {
         return resp;
     }
 
+    public String getChave(String chave){
+        return parametrosGlobaisServices.getChave(chave);
+    }
 
 }

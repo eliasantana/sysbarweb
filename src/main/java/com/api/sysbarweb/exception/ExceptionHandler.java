@@ -1,5 +1,6 @@
 package com.api.sysbarweb.exception;
 
+import com.api.sysbarweb.model.ParametrosGlobais;
 import com.api.sysbarweb.model.Produto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -106,6 +107,15 @@ public class ExceptionHandler {
         StandardError error = new StandardError(System.currentTimeMillis(),
                 HttpStatus.BAD_REQUEST.value(),
                 "PedidoException",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(ParametrosGlobaisException.class)
+    public ResponseEntity<StandardError>funcionarioExcelption (ParametrosGlobaisException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "ParametrosGlobaisException",
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FOUND).body(error);

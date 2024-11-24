@@ -139,4 +139,7 @@ public class MesaServices {
        return ResponseEntity.ok().build();
     }
 
+    public Optional<Mesa> getMesa(Long cdMesa) {
+        return repository.existeMesa(cdMesa);
+    }
 }
