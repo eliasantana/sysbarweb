@@ -1,15 +1,15 @@
 package com.api.sysbarweb.exception;
 
-public class CargoException extends RuntimeException{
+public class CozinhaException extends RuntimeException{
 
-    private CargoException() {
+    private CozinhaException() {
     }
 
-    public CargoException(String message) {
+    public CozinhaException(String message) {
         super(message);
     }
 
-    public CargoException(Throwable cause) {
+    public CozinhaException(Throwable cause) {
         super(cause);
     }
 }

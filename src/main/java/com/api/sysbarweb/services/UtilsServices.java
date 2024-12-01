@@ -6,7 +6,6 @@ import com.api.sysbarweb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.List;
 import java.util.Optional;
 
@@ -167,4 +166,13 @@ public class UtilsServices {
         return parametrosGlobaisServices.getChave(chave);
     }
 
+    public Boolean validaCozinheiro(Funcionario f) {
+        Boolean resp = false;
+        if (!f.getCargo().getDsCargo().equalsIgnoreCase("Cozinheiro")){
+            throw new FuncionarioException("O funcionário informado não tem permissão para esta ação!");
+        }else{
+            resp=true;
+        }
+        return resp;
+    }
 }

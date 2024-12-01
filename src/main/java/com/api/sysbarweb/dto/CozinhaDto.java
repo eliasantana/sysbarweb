@@ -10,14 +10,15 @@ public record CozinhaDto(
         Long cdPedido,
         LocalDateTime horaSolicitacao,
         LocalDateTime horaPrepacacao,
-        LocalDateTime tempoPreparacao,
+        String tempoPreparacao,
         int qtd,
         Long cdFuncionario,
         String nmFuncionario,
         int nrMesa,
         String status,
-        String observacao
-        
+        String observacao,
+        Long cdEmpresa,
+        String nmPrato
         
 ) {
     public CozinhaDto(Cozinha c){
@@ -32,7 +33,9 @@ public record CozinhaDto(
                 c.getNmFuncionario(),
                 c.getNrMesa(),
                 c.getStatus(),
-                c.getObservacao());
+                c.getObservacao(),
+                c.getCdEmpresa(),
+                c.getNmPrato());
     }
     
 }

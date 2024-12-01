@@ -120,4 +120,13 @@ public class ExceptionHandler {
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FOUND).body(error);
     }
+    @org.springframework.web.bind.annotation.ExceptionHandler(CozinhaException.class)
+    public ResponseEntity<StandardError>funcionarioExcelption (CozinhaException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "CozinhaException: ",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
 }

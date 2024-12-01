@@ -132,14 +132,16 @@ public class PedidoServices {
             if (produtoEstoqueSalvo.getProduto().getTipo().equalsIgnoreCase("CO")){
                Cozinha c = new Cozinha();
                c.setCdProduto(idproduto);
-               c.setCdFuncionario(pedido.get().getCdFuncionario());
+               //c.setCdFuncionario(pedido.get().getCdFuncionario());
                c.setCdPedido(idpedido);
                c.setHoraSolicitacao(LocalDateTime.now());
-               c.setNmFuncionario(funcionario.get(0).getNome());
+               //c.setNmFuncionario(funcionario.get(0).getNome());
                c.setStatus("P");
                c.setNrMesa(mesa.get().getNrMesa());
                c.setQtd(itPedido.getQtd());
                c.setObservacao(observacao);
+               c.setCdEmpresa(idemlogada);
+               c.setNmPrato(produtoEstoqueSalvo.getProduto().getDsProduto());
                cozinhaServices.repository.save(c);
             }
         }

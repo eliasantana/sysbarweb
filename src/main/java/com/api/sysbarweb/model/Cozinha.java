@@ -16,13 +16,16 @@ public class Cozinha {
     private Long cdPedido;
     private LocalDateTime horaSolicitacao;
     private LocalDateTime horaPrepacacao;
-    private LocalDateTime tempoPreparacao;
+    private String tempoPreparacao;
     private int qtd;
     private Long cdFuncionario;
     private String nmFuncionario;
     private int nrMesa;
     private String status;  // P - Pendente E - Em Preparação L - Liberado
     private String observacao;
+    private Long cdEmpresa;
+
+    private String nmPrato;
 
     public Cozinha(){
 
@@ -41,6 +44,7 @@ public class Cozinha {
         this.nrMesa = dto.nrMesa();;
         this.status = dto.status();
         this.observacao = dto.observacao();
+        this.nmPrato = dto.nmPrato();
     }
 
     public Long getCdCozinha() {
@@ -83,11 +87,11 @@ public class Cozinha {
         this.horaPrepacacao = horaPrepacacao;
     }
 
-    public LocalDateTime getTempoPreparacao() {
+    public String getTempoPreparacao() {
         return tempoPreparacao;
     }
 
-    public void setTempoPreparacao(LocalDateTime tempoPreparacao) {
+    public void setTempoPreparacao(String tempoPreparacao) {
         this.tempoPreparacao = tempoPreparacao;
     }
 
@@ -137,5 +141,21 @@ public class Cozinha {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public void setCdEmpresa(Long cdEmpresa) {
+        this.cdEmpresa = cdEmpresa;
+    }
+
+    public Long getCdEmpresa() {
+        return cdEmpresa;
+    }
+
+    public void setNmPrato(String nmPrato) {
+        this.nmPrato = nmPrato;
+    }
+
+    public String getNmPrato() {
+        return nmPrato;
     }
 }
