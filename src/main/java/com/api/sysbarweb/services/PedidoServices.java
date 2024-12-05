@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +37,16 @@ public class PedidoServices {
 
     @Autowired
     MovimentacaoServices movimentacaoServices;
+
+    @Autowired
+    CozinhaServices cozinhaServices;
     public ResponseEntity<PedidoDto> adicionar(Long idemplogada,
                                                Long idfuncionario,
                                                Long idemesa,
                                                UriComponentsBuilder builder) {
        Optional<Empresa> emp =utilsServices.validaEmpresaLogada(idemplogada);
        List<Funcionario> func = utilsServices.validaFuncionario(idemplogada, idfuncionario);
-       //Optional<Mesa> mesa = mesaServices.mesaRepository.findById(idemesa);
-        Optional<Mesa> mesa = utilsServices.retornaMesa(idemplogada, Math.toIntExact(idemesa));
+       Optional<Mesa> mesa = utilsServices.retornaMesa(idemplogada, Math.toIntExact(idemesa));
         utilsServices.validaMesa(mesa);
         if (mesa.get().getStatus().equals("L")){
             mesa.get().setStatus("O"); // O = Ocupada
@@ -55,7 +58,7 @@ public class PedidoServices {
         p.setCdMesa(mesa.get().getCdMesa());
         p.setStatusPedido("A");
         Pedido pedidosalvo = repository.save(p);
-        URI uri = builder.path("/pedido/listar/{}").buildAndExpand(new PedidoDto(pedidosalvo).cdPedido()).toUri();
+        URI uri = builder.path("/pedido/listar/{cdpedido}").buildAndExpand(new PedidoDto(pedidosalvo).cdPedido()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
@@ -96,7 +99,7 @@ public class PedidoServices {
        return totalPedido;
     }
 
-    public ResponseEntity<ItPedidoDto> incluir(Long idemlogada, Long idpedido, Long idproduto, int qtdSolicitada) {
+    public ResponseEntity<ItPedidoDto> incluir(Long idemlogada, Long idpedido, Long idproduto, int qtdSolicitada, String observacao) {
         Optional<Empresa> emp = utilsServices.validaEmpresaLogada(idemlogada);
         Optional<Pedido> pedido =utilsServices.validapedido(idemlogada, idpedido);
         Optional<ProdutoEstoque> produtoEstoque = utilsServices.validaNoProdutoEstoque(idemlogada, idproduto, qtdSolicitada);
@@ -123,7 +126,25 @@ public class PedidoServices {
             movimentacao.setCdProdutoEstoque(produtoEstoqueSalvo.getCdProdutoEstoque());
             movimentacaoServices.adicionaMovimentacao(movimentacao);
         }
-
+        if (utilsServices.getChave("SN_ENVIA_COZINHA_AUTO").equalsIgnoreCase("S")){
+            List<Funcionario> funcionario = utilsServices.validaFuncionario(idemlogada, pedido.get().getCdFuncionario());
+            Optional<Mesa> mesa= mesaServices.getMesa(pedido.get().getCdMesa());
+            if (produtoEstoqueSalvo.getProduto().getTipo().equalsIgnoreCase("CO")){
+               Cozinha c = new Cozinha();
+               c.setCdProduto(idproduto);
+               //c.setCdFuncionario(pedido.get().getCdFuncionario());
+               c.setCdPedido(idpedido);
+               c.setHoraSolicitacao(LocalDateTime.now());
+               //c.setNmFuncionario(funcionario.get(0).getNome());
+               c.setStatus("P");
+               c.setNrMesa(mesa.get().getNrMesa());
+               c.setQtd(itPedido.getQtd());
+               c.setObservacao(observacao);
+               c.setCdEmpresa(idemlogada);
+               c.setNmPrato(produtoEstoqueSalvo.getProduto().getDsProduto());
+               cozinhaServices.repository.save(c);
+            }
+        }
         return ResponseEntity.ok().build();
     }
 
@@ -154,10 +175,26 @@ public class PedidoServices {
             m.setCdProduto(pe.getProduto().getCdProduto());
             m.setCdEstoque(pe.getEstoque().getCdEstoque());
             movimentacaoServices.repository.save(m);
+            movimentacaoServices.repository.delete(movimentacaoLocalizada.get());
             //Registram em log
         } else {
             throw new ProdutoException("Senha inválida!");
         }
         return ResponseEntity.ok(new ItPedidoDto(itensPedido.get(0)));
+    }
+
+    public ResponseEntity<PedidoDto> cancelarPedido(Long idemplogada, Long idpedido) {
+        Optional<Pedido> p = utilsServices.validapedido(idemplogada,idpedido);
+        List<ItPedido> itensPedido= itPedidoServices.repository.localizar(idemplogada, idpedido);
+        if (!itensPedido.isEmpty()){
+            throw new PedidoException(String.format("O pedido %s não pode ser cancelado porque possui itens associados. Remova todos os itens antes de cancelar.",idpedido));
+        }
+        p.get().setStatusPedido("F");
+        Pedido pedidoSalvo = repository.save(p.get());
+        Mesa m = new Mesa();
+        m.setCdMesa(pedidoSalvo.getCdMesa());
+        m.setStatus("L");
+        mesaServices.repository.save(m);
+        return ResponseEntity.ok(new PedidoDto(p.get()));
     }
 }

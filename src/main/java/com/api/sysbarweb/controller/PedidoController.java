@@ -50,8 +50,9 @@ public class PedidoController {
     public ResponseEntity<ItPedidoDto>incluir(@PathVariable Long idemlogada,
                                               @PathVariable Long idpedido,
                                               @PathVariable Long idproduto,
-                                              @PathVariable int  qtd){
-        return services.incluir(idemlogada, idpedido, idproduto,qtd);
+                                              @PathVariable int  qtd,
+                                              @RequestParam (name = "observacao", required = false) String observacao){
+        return services.incluir(idemlogada, idpedido, idproduto,qtd,observacao);
     }
 
     @GetMapping("/listar/{idemplogada}/{idpedido}")
@@ -66,6 +67,12 @@ public class PedidoController {
                                                         @RequestParam(name = "cditpedido")  Long cditem){
 
         return services.removeItemPedido(idemplogada, idpedido, pasword, cditem);
+    }
+    @PostMapping("/cancelar/{idemplogada}/{idpedido}")
+    public ResponseEntity<PedidoDto>cancelarPedido(@PathVariable Long idemplogada,
+                                                   @PathVariable Long idpedido){
+
+        return services.cancelarPedido(idemplogada, idpedido);
     }
 
 }
