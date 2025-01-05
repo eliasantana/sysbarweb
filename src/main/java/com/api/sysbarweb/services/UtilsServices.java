@@ -175,4 +175,11 @@ public class UtilsServices {
         }
         return resp;
     }
+
+    public Optional<Cozinha> validaprato(Optional<Cozinha> prato) {
+        if (prato.get().getHoraPrepacacao()==null){
+            throw  new CozinhaException("Não é possível realizar a liberação: O prato ainda não foi iniciado/preparado!");
+        }
+        return prato;
+    }
 }

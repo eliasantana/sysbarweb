@@ -1,12 +1,14 @@
 package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.CozinhaDto;
+import com.api.sysbarweb.exception.CozinhaException;
 import com.api.sysbarweb.model.Cozinha;
 import com.api.sysbarweb.repository.CozinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,9 +20,11 @@ import java.util.stream.Collectors;
 public class CozinhaServices {
     @Autowired
     CozinhaRepository repository;
+    @Autowired
+    UtilsServices utilsServices;
 
-    public ResponseEntity<List<CozinhaDto>> statusCozinha(Long idemplogada, Long idfuncionario) {
-        List<Cozinha> listaCozinha = repository.statusCozinha(idemplogada, idfuncionario);
+    public ResponseEntity<List<CozinhaDto>> statusCozinha(Long idemplogada, Long idfuncionario, Long idpedido) {
+        List<Cozinha> listaCozinha = repository.statusCozinha(idemplogada, idfuncionario, idpedido);
         List<CozinhaDto> listaDto = listaCozinha.stream().map(c-> new CozinhaDto(c)).collect(Collectors.toList());
        return ResponseEntity.ok(listaDto);
     }
@@ -57,5 +61,29 @@ public class CozinhaServices {
     public ResponseEntity<CozinhaDto> liberarPrato(Optional<Cozinha> prato) {
         Cozinha c = repository.save(prato.get());
         return ResponseEntity.ok(new CozinhaDto(c));
+    }
+
+
+    public ResponseEntity<CozinhaDto> removerPrato(Long idemplogada, Long idfuncionario, Long idcozinha) {
+        utilsServices.validaEmpresaLogada(idemplogada);
+        utilsServices.validaFuncionario(idemplogada, idfuncionario);
+        Optional<Cozinha> prato =repository.localizarPrato(idcozinha);
+        Cozinha pratoSalvo = new Cozinha();
+        if(prato.isEmpty()){
+            throw  new CozinhaException("O prato informado não foilocalizado!");
+        }else {
+            if (!prato.get().getStatus().equalsIgnoreCase("L")){
+                if (prato.get().getQtd() > 1){
+                    prato.get().setQtd(prato.get().getQtd()-1);
+                    pratoSalvo = repository.save(prato.get());
+                    return ResponseEntity.ok(new CozinhaDto(pratoSalvo));
+                }else{
+                    repository.delete(prato.get());
+                    return ResponseEntity.ok(new CozinhaDto(prato.get()));
+                }
+            }else{
+                throw  new CozinhaException("O prato informado já foi liberado e não pode ser removido!");
+            }
+        }
     }
 }

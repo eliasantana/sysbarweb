@@ -17,7 +17,6 @@ public class Cargo {
     private BigDecimal vlSalarioLiquido;
     private BigDecimal vlInss;
     private BigDecimal vlFgts;
-
     private String snAtivo;
 
     public Cargo(CargoDto dto){

@@ -11,11 +11,13 @@ import java.util.Optional;
 
 @Repository
 public interface CozinhaRepository extends CrudRepository<Cozinha, Long> {
-    @Query(value = "select c.* from mesa m,  cozinha c " +
-        " where m.nr_mesa = c.nr_mesa " +
-        " and m.cd_empresa =:idemplogada " +
-        " and m.cd_funcionario =:idfuncionario", nativeQuery = true)
-    List<Cozinha> statusCozinha(Long idemplogada, Long idfuncionario);
+    @Query(value = " select * from  cozinha c                                                " +
+            " where c.cd_empresa =:idemplogada                                               " +
+            " and c.cd_funcionario =:idfuncionario                                           " +
+            " and date_format(c.hora_solicitacao,'%d%m%Y') >=date_format(curdate(),'%d%m%Y') " +
+            " and cd_pedido =:idpedido "
+            , nativeQuery = true)
+    List<Cozinha> statusCozinha(Long idemplogada, Long idfuncionario, long idpedido);
 
     @Query(value = "select * from cozinha where cd_cozinha=:idcozinha", nativeQuery = true)
     Optional<Cozinha> localizarPrato(Long idcozinha);
