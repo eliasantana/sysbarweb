@@ -14,9 +14,11 @@ public class Caixa {
     private Long cdCaixa;
     private LocalDate dtAbertura;
     private LocalDate dtFechamento;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cd_funcionario")
     private Funcionario funcionario;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
     private BigDecimal saldoInicial;
     private BigDecimal saldoFinal;
@@ -33,6 +35,7 @@ public class Caixa {
         this.empresa = dto.empresa();
         this.saldoInicial = dto.saldoInicial();
         this.saldoFinal = dto.saldoFinal();
+
     }
 
     public Long getCdCaixa() {

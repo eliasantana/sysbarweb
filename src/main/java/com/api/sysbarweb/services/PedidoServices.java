@@ -88,9 +88,10 @@ public class PedidoServices {
         }else{
             Caixa caixaLocalizado = caixaServices.localizaCaixa(idemplogada, idfuncionario);
             BigDecimal totalPedido  = totalizapedido(idemplogada, pedido.get().getCdPedido());
-            caixaLocalizado.setSaldoFinal(caixaLocalizado.getSaldoInicial().add(totalPedido));
+            caixaLocalizado.setSaldoFinal(caixaLocalizado.getSaldoFinal().add(totalPedido));
             pedido.get().setStatusPedido("F");
             pedido.get().setTotalPedido(totalPedido);
+            pedido.get().setCaixa(caixaLocalizado);
             PedidoDto dto = new PedidoDto(repository.save(pedido.get()));
             mesa.get().setStatus("L");
             mesaServices.mesaRepository.save(mesa.get());

@@ -31,4 +31,13 @@ public class CaixaController {
     ){
         return services.fecharCaixa(idemplogada, idfuncionario, password);
     }
+
+    @PostMapping("/reabrir/{idemplogada}/{idfuncionario}")
+    public ResponseEntity<CaixaDto>reabrirCaixa(
+            @PathVariable Long idemplogada,
+            @PathVariable Long idfuncionario,
+            @RequestParam(name = "pw") String password
+    ){
+        return services.reabrirCaixa(idemplogada, idfuncionario, password);
+    }
 }

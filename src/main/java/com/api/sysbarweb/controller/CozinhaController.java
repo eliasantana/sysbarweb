@@ -34,7 +34,8 @@ public class CozinhaController {
     @PostMapping("/iniciar/{idemplogada}/{idfuncionario}/{idcozinha}")
     public ResponseEntity<CozinhaDto>iniciarPrepato(@PathVariable Long idemplogada,
                                                     @PathVariable Long idfuncionario,
-                                                    @PathVariable Long idcozinha){
+                                                    @PathVariable Long idcozinha,
+                                                    @RequestParam (name = "obs", required = false) String obs){
         Optional<Empresa> empresa = utilsServices.validaEmpresaLogada(idemplogada);
         List<Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada,idfuncionario);
         utilsServices.validaCozinheiro(funcionario.get(0));
@@ -46,7 +47,8 @@ public class CozinhaController {
         prato.get().setNmFuncionario(funcionario.get(0).getNome());
         prato.get().setHoraPrepacacao(LocalDateTime.now());
         prato.get().setStatus("E"); //E - Em Preparação
-        CozinhaDto cozinhaDto= services.iniciarPreparo(prato);
+        prato.get().setObservacao(obs);
+        CozinhaDto cozinhaDto=services.iniciarPreparo(prato);
         return ResponseEntity.ok(cozinhaDto);
     }
 

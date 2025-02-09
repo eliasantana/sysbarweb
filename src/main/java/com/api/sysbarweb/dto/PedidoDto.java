@@ -1,5 +1,6 @@
 package com.api.sysbarweb.dto;
 
+import com.api.sysbarweb.model.Caixa;
 import com.api.sysbarweb.model.Pedido;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,10 +12,11 @@ public record PedidoDto(
     LocalDate dtInclusao,
     BigDecimal totalPedido,
     Long cdMesa,
-    String statusPedido
+    String statusPedido,
+    Caixa caixa
 ) {
     public PedidoDto(Pedido p){
 
-        this (p.getCdPedido(), p.getDtInclusao(), p.getTotalPedido(), p.getCdMesa(), p.getStatusPedido());
+        this (p.getCdPedido(), p.getDtInclusao(), p.getTotalPedido(), p.getCdMesa(), p.getStatusPedido(), p.getCaixa());
     }
 }

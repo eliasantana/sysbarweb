@@ -39,7 +39,7 @@ public class CaixaServices {
             c.setStatus("A");
             c.setDtAbertura(LocalDate.now());
             Caixa caixaSalvo= repository.save(c);
-            return ResponseEntity.ok(new CaixaDto(c));
+            return ResponseEntity.ok().build();
         }
     }
 
@@ -63,12 +63,25 @@ public class CaixaServices {
             if (password.equals(funcionario.get(0).getSenha()) && funcionario.get(0).getCargo().getDsCargo().equalsIgnoreCase("caixa")){
                 c.setStatus("F");
                 Caixa caixaSalvo = repository.save(c);
-                return ResponseEntity.ok(new CaixaDto(caixaSalvo));
+                return ResponseEntity.ok().build();
             }else{
                 throw  new CaixaException("Usuário ou senha inválidos!");
             }
         }else{
             throw new CaixaException("Caixa não localizado!");
+        }
+    }
+
+    public ResponseEntity<CaixaDto> reabrirCaixa(Long idemplogada, Long idfuncionario, String password) {
+        utilsServices.validaEmpresaLogada(idemplogada);
+        List<Funcionario> funcionarios = utilsServices.validaFuncionario(idemplogada, idfuncionario);
+        if (password.equals(funcionarios.get(0).getSenha()) && funcionarios.get(0).getCargo().getDsCargo().equalsIgnoreCase("caixa")){
+            Caixa c = repository.localizaCaixa(idemplogada,idfuncionario);
+            c.setStatus("A");
+            repository.save(c);
+            return ResponseEntity.ok().build();
+        }else{
+            throw new CaixaException("Usuário ou senha inválidos");
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.api.sysbarweb.dto;
 
+import com.api.sysbarweb.model.Caixa;
 import com.api.sysbarweb.model.Cargo;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Funcionario;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record FuncionarioDto(
         Long cdFuncionario,
@@ -28,7 +30,8 @@ public record FuncionarioDto(
         LocalDate dtNascimento,
         LocalDate dtInclusao,
         Cargo cargo,
-        Empresa empresa
+        Empresa empresa,
+        List<Caixa> caixas
 ) {
     public FuncionarioDto(Funcionario f){
         this(f.getCdFuncionario(),
@@ -48,6 +51,6 @@ public record FuncionarioDto(
                 f.getDtNascimento(),
                 f.getDtInclusao(),
                 f.getCargo(),
-                f.getEmpresa());
+                f.getEmpresa(), f.getCaixas());
     }
 }
