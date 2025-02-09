@@ -2,6 +2,7 @@ package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.ItPedidoDto;
 import com.api.sysbarweb.dto.PedidoDto;
+import com.api.sysbarweb.exception.CaixaException;
 import com.api.sysbarweb.exception.PedidoException;
 import com.api.sysbarweb.exception.ProdutoException;
 import com.api.sysbarweb.model.*;
@@ -37,6 +38,8 @@ public class PedidoServices {
 
     @Autowired
     MovimentacaoServices movimentacaoServices;
+    @Autowired
+    CaixaServices caixaServices;
 
     @Autowired
     CozinhaServices cozinhaServices;
@@ -76,16 +79,25 @@ public class PedidoServices {
         return  itPedidoServices.localizar(idemplogada, idpedido);
     }
 
-    public ResponseEntity<PedidoDto> fecharPedido(Long idemplogada, Long idpedido) {
+    public ResponseEntity<PedidoDto> fecharPedido(Long idemplogada, Long idpedido, Long idfuncionario) {
         Optional<Pedido> pedido = utilsServices.validapedido(idemplogada, idpedido);
         Optional<Mesa> mesa= mesaServices.repository.existeMesa(pedido.get().getCdMesa());
-        BigDecimal totalPedido  = totalizapedido(idemplogada, pedido.get().getCdPedido());
-        pedido.get().setStatusPedido("F");
-        pedido.get().setTotalPedido(totalPedido);
-        PedidoDto dto = new PedidoDto(repository.save(pedido.get()));
-        mesa.get().setStatus("L");
-        mesaServices.mesaRepository.save(mesa.get());
-        //TODO Gerar movimenação de caixa
+        List<Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada,idfuncionario);
+        if (!funcionario.get(0).getCargo().getDsCargo().equals("Caixa")){
+            throw new CaixaException("O funcionário não autorizado!");
+        }else{
+            Caixa caixaLocalizado = caixaServices.localizaCaixa(idemplogada, idfuncionario);
+            BigDecimal totalPedido  = totalizapedido(idemplogada, pedido.get().getCdPedido());
+            caixaLocalizado.setSaldoFinal(caixaLocalizado.getSaldoFinal().add(totalPedido));
+            pedido.get().setStatusPedido("F");
+            pedido.get().setTotalPedido(totalPedido);
+            pedido.get().setCaixa(caixaLocalizado);
+            PedidoDto dto = new PedidoDto(repository.save(pedido.get()));
+            mesa.get().setStatus("L");
+            mesaServices.mesaRepository.save(mesa.get());
+            caixaServices.repository.save(caixaLocalizado);
+            //TODO Gerar movimenação de caixa
+        }
         return ResponseEntity.ok().build();
     }
 

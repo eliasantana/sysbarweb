@@ -41,7 +41,7 @@ public class Cozinha {
         this.qtd = dto.qtd();
         this.cdFuncionario=dto.cdFuncionario();
         this.nmFuncionario= dto.nmFuncionario();
-        this.nrMesa = dto.nrMesa();;
+        this.nrMesa = dto.nrMesa();
         this.status = dto.status();
         this.observacao = dto.observacao();
         this.nmPrato = dto.nmPrato();

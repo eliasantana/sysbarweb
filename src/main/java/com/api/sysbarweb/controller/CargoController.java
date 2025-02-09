@@ -24,7 +24,7 @@ public class CargoController {
 
     @PutMapping("/adicionar")
     public ResponseEntity<CargoDto> adicionar(@RequestBody @Valid CargoDto dto, UriComponentsBuilder builder){
-        System.out.println(dto);
+
         return services.adicionar(dto,builder);
     }
 

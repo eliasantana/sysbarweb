@@ -1,5 +1,6 @@
 package com.api.sysbarweb.exception;
 
+import com.api.sysbarweb.model.Caixa;
 import com.api.sysbarweb.model.ParametrosGlobais;
 import com.api.sysbarweb.model.Produto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -125,6 +126,15 @@ public class ExceptionHandler {
         StandardError error = new StandardError(System.currentTimeMillis(),
                 HttpStatus.BAD_REQUEST.value(),
                 "CozinhaException: ",
+                ex.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FOUND).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(CaixaException.class)
+    public ResponseEntity<StandardError>caixaException (CaixaException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "CaixaException: ",
                 ex.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FOUND).body(error);

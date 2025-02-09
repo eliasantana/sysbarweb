@@ -7,6 +7,7 @@ import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "empresa")
@@ -49,6 +50,8 @@ public class Empresa {
     private String snAtivo;
 
     private double tetoDesconto;
+    @OneToMany(mappedBy = "empresa")
+    List<Caixa> caixas;
 
     public Empresa(){
 
@@ -257,29 +260,11 @@ public class Empresa {
         return tetoDesconto;
     }
 
-    @Override
-    public String toString() {
-        return "Empresa{" +
-                "cdEmpresa=" + cdEmpresa +
-                ", nomeEmpresa='" + nomeEmpresa + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", numero=" + numero +
-                ", bairro='" + bairro + '\'' +
-                ", cep='" + cep + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", uf='" + uf + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", celular='" + celular + '\'' +
-                ", email='" + email + '\'' +
-                ", logo='" + logo + '\'' +
-                ", cnpj='" + cnpj + '\'' +
-                ", localBackup='" + localBackup + '\'' +
-                ", chaveLicenca='" + chaveLicenca + '\'' +
-                ", dtCadastro='" + dtCadastro + '\'' +
-                ", complemento='" + complemento + '\'' +
-                ", snBackupAuto=" + snBackupAuto +
-                ", snAtivaDelivery=" + snAtivaDelivery +
-                ", snAtivaCozinha=" + snAtivaCozinha +
-                '}';
+    public void setCaixas(List<Caixa> caixas) {
+        this.caixas = caixas;
+    }
+
+    public List<Caixa> getCaixas() {
+        return caixas;
     }
 }

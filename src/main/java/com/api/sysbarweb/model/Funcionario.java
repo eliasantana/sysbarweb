@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "funcionario")
@@ -29,6 +30,8 @@ public class Funcionario {
     private LocalDate dtAdmissao;
     private LocalDate dtNascimento;
     private LocalDate dtInclusao;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
+    private List<Caixa> caixas;
 
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
@@ -60,6 +63,7 @@ public class Funcionario {
         this.cargo = dto.cargo();
         this.empresa = dto.empresa();
         this.nome = dto.nome();
+        this.caixas = dto.caixas();
 
     }
 
@@ -205,5 +209,13 @@ public class Funcionario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void setCaixas(List<Caixa> caixas) {
+        this.caixas = caixas;
+    }
+
+    public List<Caixa> getCaixas() {
+        return caixas;
     }
 }

@@ -18,7 +18,7 @@ public class Movimentacao {
     private String dsProduto;
     private LocalDate dtInclusao;
     private Long cdEstoque;
-    private String cdUsuarioExclucao;
+    private String cdUsuarioExclusao;
     private Long cdPedido;
 
     public Movimentacao(){
@@ -89,12 +89,12 @@ public class Movimentacao {
         this.cdEstoque = cdEstoque;
     }
 
-    public String getCdUsuarioExclucao() {
-        return cdUsuarioExclucao;
+    public String getCdUsuarioExclusao() {
+        return cdUsuarioExclusao;
     }
 
-    public void setCdUsuarioExclucao(String cdUsuarioExclucao) {
-        this.cdUsuarioExclucao = cdUsuarioExclucao;
+    public void setCdUsuarioExclusao(String cdUsuarioExclusao) {
+        this.cdUsuarioExclusao = cdUsuarioExclusao;
     }
 
     public Long getCdPedido() {
