@@ -5,13 +5,13 @@ import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.services.PedidoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "http://localhost")
 @RequestMapping("/pedido")
 public class PedidoController {
 
@@ -29,7 +29,7 @@ public class PedidoController {
     }
 
     @GetMapping("/listar/{idemplogada}")
-    public ResponseEntity<List<PedidoDto>>listar(@PathVariable Long idemplogada){
+        public ResponseEntity<List<PedidoDto>>listar(@PathVariable Long idemplogada){
         return services.listar(idemplogada);
     }
 
