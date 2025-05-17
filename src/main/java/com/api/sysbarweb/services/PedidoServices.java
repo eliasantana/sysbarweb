@@ -1,6 +1,7 @@
 package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.ItPedidoDto;
+import com.api.sysbarweb.dto.ItemDto;
 import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.exception.CaixaException;
 import com.api.sysbarweb.exception.PedidoException;
@@ -75,8 +76,11 @@ public class PedidoServices {
         return ResponseEntity.ok(pedidosDto);
     }
 
-    public ResponseEntity<List<ItPedidoDto>> localizar(Long idemplogada, Long idpedido) {
+    public ResponseEntity<List<ItemDto>> localizar(Long idemplogada, Long idpedido) {
         return  itPedidoServices.localizar(idemplogada, idpedido);
+    }
+    public List<ItemDto> localizarItensPedidoMesa(Long idemplogada, Long nrmesa) {
+        return  itPedidoServices.localizarItensPedidoMesa(idemplogada, nrmesa);
     }
 
     public ResponseEntity<PedidoDto> fecharPedido(Long idemplogada, Long idpedido, Long idfuncionario) {
@@ -160,7 +164,7 @@ public class PedidoServices {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<List<ItPedidoDto>> listarItensPedido(Long idemplogada, Long idpedido) {
+    public ResponseEntity<List<ItemDto>> listarItensPedido(Long idemplogada, Long idpedido) {
         return itPedidoServices.localizar(idemplogada,idpedido);
     }
 

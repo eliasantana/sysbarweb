@@ -9,14 +9,9 @@ import jakarta.persistence.ManyToOne;
 public record MesaDto(
          Long cdMesa,
          int nrMesa,
-
-         Empresa empresa,
-
-         Funcionario funcionario,
-
          String status
 ) {
     public MesaDto(Mesa m){
-       this(m.getCdMesa(), m.getNrMesa(), m.getEmpresa(), m.getFuncionario(), m.getStatus());
+       this(m.getCdMesa(), m.getNrMesa(), m.getStatus());
     }
     }

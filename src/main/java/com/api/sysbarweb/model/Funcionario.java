@@ -1,6 +1,7 @@
 package com.api.sysbarweb.model;
 
 import com.api.sysbarweb.dto.FuncionarioDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;
@@ -30,10 +31,13 @@ public class Funcionario {
     private LocalDate dtAdmissao;
     private LocalDate dtNascimento;
     private LocalDate dtInclusao;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
+    @JsonIgnore
     private List<Caixa> caixas;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
 

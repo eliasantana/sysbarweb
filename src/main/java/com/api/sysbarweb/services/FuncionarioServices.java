@@ -1,6 +1,7 @@
 package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.FuncionarioDto;
+import com.api.sysbarweb.dto.LoginValidate;
 import com.api.sysbarweb.exception.CargoException;
 import com.api.sysbarweb.exception.EmpresaException;
 import com.api.sysbarweb.exception.FuncionarioException;
@@ -38,6 +39,22 @@ public class FuncionarioServices {
         }
         List<FuncionarioDto> funcionarioDto = funcionarioList.stream().map(f -> new FuncionarioDto(f)).collect(Collectors.toList());
         return ResponseEntity.ok(funcionarioDto);
+    }
+    public ResponseEntity<LoginValidate> validaAutenticacao(String cpf, String password) {
+        Optional<Funcionario> funcionarioLocalizado=repository.localizarFuncionario(cpf);
+        if (funcionarioLocalizado.isEmpty()) {
+            throw new FuncionarioException("Funcionário não localizado, acesso não autorizado!");
+        }else if (funcionarioLocalizado.get().getSenha().equals(password)){
+             LoginValidate loginValidate = new LoginValidate(funcionarioLocalizado.get().getEmpresa().getCdEmpresa(),
+                    funcionarioLocalizado.get().getEmpresa().getNomeEmpresa(),
+                    funcionarioLocalizado.get().getCdFuncionario(),
+                    funcionarioLocalizado.get().getNome(),
+                    funcionarioLocalizado.get().getCargo().getCdCargo(),
+                    funcionarioLocalizado.get().getCargo().getDsCargo());
+            return ResponseEntity.ok(loginValidate);
+        }else{
+            throw new FuncionarioException("Usuário ou senha Inválido!");
+        }
     }
     /**
      * Transfere um funcionário entre empresas

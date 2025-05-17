@@ -27,8 +27,6 @@ public class Mesa {
     public Mesa(MesaDto dto){
         this.cdMesa = dto.cdMesa();
         this.nrMesa = dto.nrMesa();
-        this.empresa = dto.empresa();
-        this.funcionario = dto.funcionario();
         this.status = dto.status();
     }
 

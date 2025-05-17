@@ -1,0 +1,256 @@
+[33mcommit 18b5b257a64aca87419f1cfae5fd50668fb248f6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sat Feb 15 14:11:14 2025 -0300
+
+    Update README.md
+
+[33mcommit cd997623cacd7d3e4c8076d740cf20ccf493ff07[m
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sat Feb 15 14:10:32 2025 -0300
+
+    Update README.md
+    
+    html
+
+[33mcommit 3874018be20b657b58357b2e9a51aa5803f2e4d5[m
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sat Feb 15 14:04:21 2025 -0300
+
+    Update README.md
+    
+    Atualizando o Readme
+
+[33mcommit 40c116b15228d7d1be9a35e87c4b5fd3970a6bcc[m
+Merge: 03b2ecb 67afcd9
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sun Feb 9 10:48:00 2025 -0300
+
+    Merge pull request #10 from eliasantana/feature/v.1.2.6
+    
+    Feature/v.1.2.6
+
+[33mcommit 67afcd9fc09f3cd71b169797fbdb4b12a3709fd5[m[33m ([m[1;31morigin/feature/v.1.2.6[m[33m, [m[1;32mfeature/v.1.2.6[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sun Feb 9 10:47:12 2025 -0300
+
+    v.1.2.6 | CAIXA |AJUSTES GERAIS
+
+[33mcommit 6bdeb19d5a72763ffb3572649c287bcb3a16fcb1[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sat Jan 4 22:39:47 2025 -0300
+
+    v.1.2.5 | CAIXA |FECHAMENTO E ABERTURA DE CAIXA
+
+[33mcommit 03b2ecbf8155d5fef909beab1de2ab8cb145c219[m
+Merge: 74fe045 15a93f4
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Thu Dec 5 19:58:59 2024 -0300
+
+    Merge pull request #9 from eliasantana/feature/v.1.2.4
+    
+    Feature/v.1.2.4
+
+[33mcommit 15a93f41ee05321ab488f2b2967b46b93ab755fa[m[33m ([m[1;31morigin/feature/v.1.2.4[m[33m, [m[1;32mfeature/v.1.2.4[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sun Dec 1 07:12:20 2024 -0300
+
+    v.1.2.4 | COZINHA | Adicionando Liberação de Pratos da Cozinha e calculo do tempo de preparação
+
+[33mcommit 66ce8aaaabe1ccbbca546da699521a0b5bd5fb84[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sun Dec 1 07:12:01 2024 -0300
+
+    v.1.2.4 | COZINHA | Adicionando Liberação de Pratos da Cozinha e calculo do tempo de preparação
+
+[33mcommit 8293c91a51c77afd73f48bf8c6042110dd6aeda7[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sat Nov 23 22:54:05 2024 -0300
+
+    v.1.2.4 | COZINHA | Enviar produto para a cozinha utilizando chave de configuração
+
+[33mcommit 9f85a946a999ddcff740d0cf684f0b339d779dc4[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sat Nov 23 09:56:09 2024 -0300
+
+    v.1.2.4 | PEDIDO | ITPEDIDO | juste no método de remover item do pedido
+
+[33mcommit 74fe0451891ebaa192c799f19e78b1f036eae5a9[m
+Merge: 5cf0088 899ca5f
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sat Nov 23 08:34:02 2024 -0300
+
+    Merge pull request #8 from eliasantana/feature/v.1.2.3
+    
+    Feature/v.1.2.3
+
+[33mcommit 899ca5f3809e495ca5eb9b9edb33fbca54671c97[m[33m ([m[1;31morigin/feature/v.1.2.3[m[33m, [m[1;32mfeature/v.1.2.3[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sat Nov 23 08:31:48 2024 -0300
+
+    v.1.2.4 | PEDIDO | ITPEDIDO | Removendo itens do pedido e gerando movimentação de Devolução
+
+[33mcommit 756fcace568da65862d445326c03440967a376b8[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Wed Oct 30 20:36:30 2024 -0300
+
+    v.1.2.3 | PEDIDO | ADICIONANDO A FUNCIONALIDADE ADICIONAR FECHAR PEDIDO
+
+[33mcommit 5cf00880641a2ad98bf346a7d43d1aec6a3a427e[m
+Merge: 07313e2 1540ed7
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Mon Oct 21 20:43:52 2024 -0300
+
+    Merge pull request #7 from eliasantana/feature/v.1.2.1
+    
+    Feature/v.1.2.1
+
+[33mcommit 1540ed7428085578479e769fa7c721ee76ac8bee[m[33m ([m[1;31morigin/feature/v.1.2.1[m[33m)[m
+Merge: a804372 07313e2
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Mon Oct 21 20:43:44 2024 -0300
+
+    Merge branch 'main' into feature/v.1.2.1
+
+[33mcommit 07313e2a3ed7804a97cb28e873b0af487ecabcb6[m
+Merge: 93ac7ef a64ec54
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Mon Oct 21 20:37:40 2024 -0300
+
+    Merge pull request #6 from eliasantana/feature/v.1.2.2
+    
+    Feature/v.1.2.2
+
+[33mcommit a64ec544524b4fceaa6d662bedf2899c8838464d[m[33m ([m[1;31morigin/feature/v.1.2.2[m[33m, [m[1;32mfeature/v.1.2.2[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Mon Oct 21 20:35:21 2024 -0300
+
+    v.1.2.2 | IT_PEDIDO | AJUSTE NO RELACIONAMENTO DA ENTIDADE ITPEDIDO
+
+[33mcommit 5eaf91bb95fb38602788d052b51278bf64749e60[m
+Author: Kauan <kauanmrs2016@gmail.com>
+Date:   Sun Oct 20 18:05:55 2024 -0300
+
+    v.1.2.2 | IT_PEDIDO | ADICIONANDO ITEM DO PEDIDO
+
+[33mcommit 501775f7ee02eab973abd849c7390116a7e76367[m
+Author: Kauan <kauanmrs2016@gmail.com>
+Date:   Sat Oct 19 14:31:15 2024 -0300
+
+    v.1.2.2 | PEDIDO | LISTAR PEDIDOS ABERTOS
+
+[33mcommit c5ea1445a02fa967c0802a8095d4a54729f9b2f1[m
+Author: Kauan <kauanmrs2016@gmail.com>
+Date:   Sat Oct 19 13:58:47 2024 -0300
+
+    v.1.2.2 | PEDIDO | ADICIONANDO A FUNCIONALIDADE ADICIONAR PEDIDO
+
+[33mcommit a804372ee69e12017dbeeee3e63abc44c30bacfb[m[33m ([m[1;32mfeature/v.1.2.1[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sat Oct 12 08:03:41 2024 -0300
+
+    v.1.2.1 | PRODUTO ESTOQUE | FUNCIONALIDADE ADICIONAR PRODUTO AO ESTOQUE
+
+[33mcommit abb9928d4fb0cbce3910cf4d8e092bf9ca23ef8a[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Fri Oct 11 08:36:44 2024 -0300
+
+    v.1.2.1 | PRODUTO ESTOQUE | AJUSTE NO RETORNO DA API PARA RETORNAR CORRETAMENTE OS PRODUTOS EM ESTOQUE
+
+[33mcommit 93ac7ef8e362dab7974c8c25526cb90512eb3c62[m
+Merge: 541fad5 9cb91f2
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Thu Oct 10 20:18:33 2024 -0300
+
+    Merge pull request #5 from eliasantana/feature/v.1.1.9
+    
+    Feature/v.1.1.9
+
+[33mcommit 9cb91f2c59bbbfef5116319a02327685f90ebcbf[m[33m ([m[1;31morigin/feature/v.1.1.9[m[33m, [m[1;32mfeature/v.1.1.9[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Thu Oct 10 20:16:30 2024 -0300
+
+    v.1.1.9 | MESA | ALTERAR GARCOM DE MESA
+
+[33mcommit dc3ea2ee4e3091661226d740ec0795aef5f999ec[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Wed Oct 9 23:01:08 2024 -0300
+
+    v.1.2.1 | Adicionando mesas a partir de um intervalo
+
+[33mcommit c9f4bf0171d27c5bc29ce3b8c726f3314cf3b3aa[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Wed Oct 9 22:11:37 2024 -0300
+
+    v.1.1.9 | MESA | LISTANDO MESAS DO FUNCIONÁRIO INFORMADO
+
+[33mcommit 33b87eff5de0ddfbb47953975bfb2e7d27e6f52a[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Wed Oct 9 21:41:52 2024 -0300
+
+    v.1.1.9 | MESA | ADICIONANDO MESA A EMPRESA LOGADA
+
+[33mcommit 541fad517ff01bdd9bc4803abda4b6d4ba43169d[m
+Merge: 63f8eb3 df580e1
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sun Oct 6 00:23:50 2024 -0300
+
+    Merge pull request #4 from eliasantana/feature/v.1.1.8
+    
+    v.1.1.7 | FUNCIONALIDADE ADICIONAR MESA
+
+[33mcommit df580e1cde613d418bf2db2697fecacd8bb012e8[m[33m ([m[1;31morigin/feature/v.1.1.8[m[33m)[m
+Author: Kauan <kauanmrs2016@gmail.com>
+Date:   Sun Oct 6 00:20:22 2024 -0300
+
+    v.1.1.7 | FUNCIONALIDADE ADICIONAR MESA
+
+[33mcommit 63f8eb3dd546bbc438c195f9d21bc6a064f018b4[m
+Merge: 880bad4 0baca2c
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sat Oct 5 23:35:46 2024 -0300
+
+    Merge pull request #3 from eliasantana/feature/v.1.1.7
+    
+    v.1.1.7 | ADICIONANDO ENTIDADE MESA
+
+[33mcommit 0baca2c00406520a7782c8ffe290d3acaf498b81[m
+Author: Kauan <kauanmrs2016@gmail.com>
+Date:   Sat Oct 5 23:33:38 2024 -0300
+
+    v.1.1.7 | ADICIONANDO ENTIDADE MESA
+
+[33mcommit 880bad4587e76e1b989c6e33c79b2c3fcb393bb1[m
+Merge: 8372b3c 9a10e9e
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Wed Sep 25 11:46:59 2024 -0300
+
+    Merge pull request #2 from eliasantana/feature/v.1.1.6
+    
+    v.1.1.6 | PRODUTO | Adicinando a funcionalidade PRODUTO
+
+[33mcommit 9a10e9eb0d7a86a43f83be46187c0a540766da64[m[33m ([m[1;31morigin/feature/v.1.1.6[m[33m, [m[1;32mfeature/v.1.1.6[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Wed Sep 25 11:45:31 2024 -0300
+
+    v.1.1.6 | PRODUTO | Adicinando a funcionalidade PRODUTO
+
+[33mcommit 8372b3cef444b433519b122c929c4dd33c1d1cb6[m
+Merge: 058d8b1 95b0ecf
+Author: Elias Santana <eliasantanasilva@gmail.com>
+Date:   Sun Sep 22 11:42:14 2024 -0300
+
+    Merge pull request #1 from eliasantana/feture/#v.1.1.5
+    
+    v.1.1.5 | FUNCIONARIO | Adicionando a fucionalidade Funcionario
+
+[33mcommit 95b0ecf6517a102a64dfa636e18113f789816e7d[m[33m ([m[1;31morigin/feture/#v.1.1.5[m[33m, [m[1;32mfeture/#v.1.1.5[m[33m)[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Sun Sep 22 11:41:16 2024 -0300
+
+    v.1.1.5 | FUNCIONARIO | Adicionando a fucionalidade Funcionario
+
+[33mcommit 058d8b16c70559c8236e7f8d87947c8701514d4a[m
+Author: eliasantana <eliasantanasilva@gmail.com>
+Date:   Fri Sep 20 21:36:29 2024 -0300
+
+    inicial commit
