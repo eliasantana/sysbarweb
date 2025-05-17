@@ -1,6 +1,7 @@
 package com.api.sysbarweb.controller;
 
 import com.api.sysbarweb.dto.ItPedidoDto;
+import com.api.sysbarweb.dto.ItemDto;
 import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.services.PedidoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,15 @@ public class PedidoController {
     }
 
     @GetMapping("/localizar/{idemplogada}/{idpedido}")
-    public ResponseEntity<List<ItPedidoDto>> localizar(@PathVariable Long idemplogada,
+    public ResponseEntity<List<ItemDto>> localizar(@PathVariable Long idemplogada,
                                                  @PathVariable Long idpedido){
         return services.localizar(idemplogada, idpedido);
+
+    }
+    @GetMapping("/itens/{idemplogada}/{nrmesa}")
+    public List<ItemDto> localizarItensPedidoMesa(@PathVariable Long idemplogada,
+                                                  @PathVariable Long nrmesa){
+        return services.localizarItensPedidoMesa(idemplogada, nrmesa);
 
     }
     @PostMapping("/fechar/{idemplogada}/{idpedido}/{idfuncionario}")
@@ -57,8 +64,8 @@ public class PedidoController {
     }
 
     @GetMapping("/listar/{idemplogada}/{idpedido}")
-    public ResponseEntity<List<ItPedidoDto>>listarItensPedido(@PathVariable Long idemplogada,
-                                                              @PathVariable Long idpedido){
+    public ResponseEntity<List<ItemDto>>listarItensPedido(@PathVariable Long idemplogada,
+                                                          @PathVariable Long idpedido){
         return services.listarItensPedido(idemplogada, idpedido);
     }
     @PostMapping("/remover/{idemplogada}/{idpedido}")

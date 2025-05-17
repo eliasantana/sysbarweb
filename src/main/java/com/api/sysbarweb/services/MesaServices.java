@@ -83,7 +83,10 @@ public class MesaServices {
         Optional<Empresa> empresaLocalizada=utilsServices.validaEmpresaLogada(idemplogada);
         List<Funcionario> funcinario=utilsServices.validaFuncionario(idemplogada, idfuncionario);
         List<Mesa> mesas=repository.listarMesaGarcom(idemplogada, idfuncionario);
-        List<MesaDto> mesasDto=mesas.stream().map(MesaDto::new).toList();
+        List<MesaDto> mesasDto = new ArrayList<>();
+        for (int i = 0; i < mesas.size(); i++) {
+            mesasDto.add(new MesaDto(mesas.get(i)));
+        }
         return ResponseEntity.ok(mesasDto);
     }
 

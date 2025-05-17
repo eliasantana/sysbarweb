@@ -19,4 +19,7 @@ public interface FuncionarioResponsitory extends CrudRepository<Funcionario, Lon
     @Query(value="select * from funcionario where nr_cpf=:nrCpf or nr_rg =:nrrg limit 1", nativeQuery = true)
     Optional<Funcionario> localizarFuncionario(String nrCpf, String nrrg);
 
+    @Query(value="select * from funcionario where nr_cpf=:nrCpf limit 1", nativeQuery = true)
+    Optional<Funcionario> localizarFuncionario(String nrCpf);
+
 }
