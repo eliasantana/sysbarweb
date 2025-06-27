@@ -28,8 +28,8 @@ public class MovimentacaoServices {
         repository.save(m);
     }
 
-    public Optional<Movimentacao> localizaMovimentacao(Long cdPedido, Long idproduto, int qtd) {
-        Optional<Movimentacao>movimentacao = repository.localizarMovimentacao(cdPedido,idproduto,qtd );
+    public Optional<Movimentacao> localizaMovimentacao(Long cdPedido, Long idproduto, int qtd, Long cdItPedido) {
+        Optional<Movimentacao>movimentacao = repository.localizarMovimentacao(cdPedido,idproduto,qtd,cdItPedido );
         if (movimentacao.isEmpty()){
             throw new ProdutoEstoqueException(String.format("Não foi possível localizar a movimentação do pedido %s para o item %s e quantidade %s.", cdPedido, idproduto, qtd));
         }

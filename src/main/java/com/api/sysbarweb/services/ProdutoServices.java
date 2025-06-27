@@ -69,6 +69,22 @@ public class ProdutoServices {
         return ResponseEntity.ok(produtoDtos);
     }
 
+    /**
+     * Retorna todos os produtos em estoque da empresa Logada
+     * @Param cdEmpresaLogada  - Código da Empresa logada na sessão
+     * @Autor: Elias Silva
+     * */
+    public ResponseEntity<List<ProdutoDto>> listarTodosOsProdutosEmpLogada(Long cdemplogada) {
+        List<Produto> produtos  = repository.listarTodosOsProdutosEmpLogada(cdemplogada);
+        if (produtos.isEmpty()){
+            throw new ProdutoException("Nenhum Produto Localizado!");
+        }
+        List<ProdutoDto> produtoDtos =produtos.stream()
+                .map(p -> new ProdutoDto(p))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(produtoDtos);
+    }
+
     public ResponseEntity<ProdutoDto> excluir(Long idproduto) {
         Optional<Produto> p =repository.findById(idproduto);
         Produto produtoSalvo = new Produto();

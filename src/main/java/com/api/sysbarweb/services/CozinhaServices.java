@@ -23,8 +23,8 @@ public class CozinhaServices {
     @Autowired
     UtilsServices utilsServices;
 
-    public ResponseEntity<List<CozinhaDto>> statusCozinha(Long idemplogada, Long idfuncionario, Long idpedido) {
-        List<Cozinha> listaCozinha = repository.statusCozinha(idemplogada, idfuncionario, idpedido);
+    public ResponseEntity<List<CozinhaDto>> statusCozinha(Long idemplogada, Long nrmesa) {
+        List<Cozinha> listaCozinha = repository.statusCozinha(idemplogada, nrmesa);
         List<CozinhaDto> listaDto = listaCozinha.stream().map(c-> new CozinhaDto(c)).collect(Collectors.toList());
        return ResponseEntity.ok(listaDto);
     }

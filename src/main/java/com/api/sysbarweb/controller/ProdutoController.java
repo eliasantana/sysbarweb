@@ -30,6 +30,11 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoDto>>listarTodos(){
         return services.listarTodos();
     }
+    @GetMapping("/listartodos/{cdemplogada}")
+    public ResponseEntity<List<ProdutoDto>>listarTodosOsProdutosEmpLogada( @PathVariable Long cdemplogada){
+        return services.listarTodosOsProdutosEmpLogada(cdemplogada);
+    }
+
     @PostMapping("/excluir/{idproduto}")
     public ResponseEntity<ProdutoDto>excluir(@PathVariable Long idproduto){
         return services.excluir(idproduto);

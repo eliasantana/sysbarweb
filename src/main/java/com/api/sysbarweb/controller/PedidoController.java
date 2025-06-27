@@ -83,4 +83,11 @@ public class PedidoController {
         return services.cancelarPedido(idemplogada, idpedido);
     }
 
+    @GetMapping("/localizarpedido/{cdemplogada}/{nrmesa}")
+    public ResponseEntity<PedidoDto>localizaPedidoPorNumeroMesa(@PathVariable Long nrmesa,
+                                                                @PathVariable Long cdemplogada){
+        return services.localizaPedidoPorNumeroMesa(nrmesa,cdemplogada);
+    }
+
+
 }
