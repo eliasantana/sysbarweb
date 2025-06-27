@@ -9,9 +9,12 @@ import java.util.Optional;
 
 @Repository
 public interface MovimentacaoRepository extends CrudRepository<Movimentacao, Long> {
-    @Query(value = "select * " +
-                   " from movimentacao where cd_movimentacao in ( " +
-                   " select max(cd_movimentacao) from movimentacao  " +
-                   " where cd_pedido =:cdpedido and cd_produto=:idproduto and qtd =:qtd) and tp_movimentacao='S'", nativeQuery = true)
-    Optional<Movimentacao> localizarMovimentacao(Long cdpedido, Long idproduto, int qtd);
+    @Query(value = " select m.* from movimentacao m,  it_pedido it " +
+                   " where m.cd_pedido = it.cd_pedido " +
+                   " and it.cd_it_pedido =:cditpedido " +
+                   " and m.cd_movimentacao in ( " +
+                   "                            select max(cd_movimentacao) from movimentacao " +
+                   "                                 where cd_pedido =:cdpedido and cd_produto=:idproduto " +
+                   "                                 and qtd =:qtd) " , nativeQuery = true)
+    Optional<Movimentacao> localizarMovimentacao(Long cdpedido, Long idproduto, int qtd, Long cditpedido);
 }

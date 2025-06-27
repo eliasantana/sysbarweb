@@ -23,11 +23,10 @@ public class CozinhaController {
     @Autowired
     UtilsServices utilsServices;
 
-    @GetMapping("/status/{idemplogada}/{idfuncionario}/{idpedido}")
+    @GetMapping("/status/{idemplogada}/{nrmesa}")
     public ResponseEntity<List<CozinhaDto>> statusCozinha(@PathVariable Long idemplogada,
-                                                          @PathVariable Long idfuncionario,
-                                                          @PathVariable Long idpedido){
-       return services.statusCozinha(idemplogada, idfuncionario, idpedido);
+                                                          @PathVariable Long nrmesa){
+       return services.statusCozinha(idemplogada, nrmesa);
 
     }
 

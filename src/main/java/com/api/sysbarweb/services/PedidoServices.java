@@ -174,7 +174,7 @@ public class PedidoServices {
             Optional<Empresa> empresa = utilsServices.validaEmpresaLogada(idemplogada);
             Optional<Pedido> pedido = utilsServices.validapedido(idemplogada, idpedido);
             itensPedido = itPedidoServices.validaItemPedido(idemplogada, idpedido, cdItPedido);
-            Optional<Movimentacao> movimentacaoLocalizada = movimentacaoServices.localizaMovimentacao(pedido.get().getCdPedido(), itensPedido.get(0).getProduto().getCdProduto(), itensPedido.get(0).getQtd());
+            Optional<Movimentacao> movimentacaoLocalizada = movimentacaoServices.localizaMovimentacao(pedido.get().getCdPedido(), itensPedido.get(0).getProduto().getCdProduto(), itensPedido.get(0).getQtd(), cdItPedido);
 
             Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueRepository.validaProdutoEstoque(movimentacaoLocalizada.get().getCdEstoque(), movimentacaoLocalizada.get().getCdProduto());
             //Devolvendo a quantidade da moviemntação para o estoque
@@ -212,5 +212,11 @@ public class PedidoServices {
         m.setStatus("L");
         mesaServices.repository.save(m);
         return ResponseEntity.ok(new PedidoDto(p.get()));
+    }
+
+    public ResponseEntity<PedidoDto> localizaPedidoPorNumeroMesa(Long nrmesa, Long cdemplogada) {
+        Pedido pedido = repository.localizaPedidoPorNumeroMesa(nrmesa, cdemplogada);
+        PedidoDto dto = new PedidoDto(pedido);
+        return ResponseEntity.ok(dto);
     }
 }
