@@ -2,6 +2,7 @@ package com.api.sysbarweb.repository;
 
 import com.api.sysbarweb.dto.EmpresaDto;
 import com.api.sysbarweb.model.Empresa;
+import com.api.sysbarweb.projections.TxEstatisticaProjection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,7 @@ public interface EmpresaRepository extends CrudRepository<Empresa, Long> {
 
     @Query(value = "select * from empresa where sn_ativo='S'", nativeQuery = true)
     List<Empresa> listarTodas();
+
+    @Query(value = "select * from v_tx_ocupacao where cd_empresa=:cdempresa", nativeQuery = true)
+    TxEstatisticaProjection getStatistica(Long cdempresa);
 }
