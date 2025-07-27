@@ -2,6 +2,7 @@ package com.api.sysbarweb.controller;
 
 import com.api.sysbarweb.dto.CaixaDto;
 import com.api.sysbarweb.services.CaixaServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/caixa")
+@Tag(name = "Caixa", description = "Gerenciamento de Caixa")
 public class CaixaController {
     @Autowired
     CaixaServices services;

@@ -6,6 +6,7 @@ import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Funcionario;
 import com.api.sysbarweb.services.CozinhaServices;
 import com.api.sysbarweb.services.UtilsServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/cozinha")
+@Tag(name = "Cozinha", description = "Gerenciamento da Cozinha!")
 public class CozinhaController {
     @Autowired
     CozinhaServices services;

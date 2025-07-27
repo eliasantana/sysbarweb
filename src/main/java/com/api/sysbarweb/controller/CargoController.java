@@ -2,6 +2,7 @@ package com.api.sysbarweb.controller;
 
 import com.api.sysbarweb.dto.CargoDto;
 import com.api.sysbarweb.services.CargoServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cargo")
+@Tag(name = "Cargo", description = "Controle e Gerenciamento de Cargos")
 public class CargoController {
 
     @Autowired
