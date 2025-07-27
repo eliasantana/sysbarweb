@@ -4,6 +4,7 @@ import com.api.sysbarweb.dto.ItPedidoDto;
 import com.api.sysbarweb.dto.ItemDto;
 import com.api.sysbarweb.dto.PedidoDto;
 import com.api.sysbarweb.services.PedidoServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(value = "http://localhost")
 @RequestMapping("/pedido")
+@Tag(name = "Pedido", description = "Gerenciamento e Controle de Pedidos")
 public class PedidoController {
 
     @Autowired

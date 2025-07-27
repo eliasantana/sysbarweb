@@ -3,6 +3,7 @@ package com.api.sysbarweb.controller;
 import com.api.sysbarweb.dto.FuncionarioDto;
 import com.api.sysbarweb.model.Funcionario;
 import com.api.sysbarweb.services.FuncionarioServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/funcionario")
+@Tag(name = "Funcionário", description = "Gerenciamento e Controle dos Funcionários")
 public class FuncionarioController {
 
     @Autowired

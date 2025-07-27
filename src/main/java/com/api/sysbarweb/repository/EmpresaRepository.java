@@ -18,7 +18,7 @@ public interface EmpresaRepository extends CrudRepository<Empresa, Long> {
     @Query(value = "select * from empresa where cnpj =:cnpj and sn_ativo='S'", nativeQuery = true)
     List <Optional<Empresa>> existEmpresa(String cnpj);
 
-    @Query(value = "select * from empresa where sn_ativo='S'", nativeQuery = true)
+    @Query(value = "select * from empresa", nativeQuery = true)
     List<Empresa> listarTodas();
 
     @Query(value = "select * from v_tx_ocupacao where cd_empresa=:cdempresa", nativeQuery = true)

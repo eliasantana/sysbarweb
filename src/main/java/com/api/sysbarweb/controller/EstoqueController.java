@@ -6,6 +6,7 @@ import com.api.sysbarweb.dto.ProdutoEstoqueDto;
 import com.api.sysbarweb.model.Estoque;
 import com.api.sysbarweb.model.ProdutoEstoque;
 import com.api.sysbarweb.services.EstoqueServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/estoque")
+@Tag(name = "Estoque", description = "Gerenciamento do Estoque")
 public class EstoqueController {
     @Autowired
     EstoqueServices services;

@@ -3,6 +3,7 @@ package com.api.sysbarweb.controller;
 import com.api.sysbarweb.dto.MesaDto;
 import com.api.sysbarweb.model.Mesa;
 import com.api.sysbarweb.services.MesaServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/mesa")
+@Tag(name = "Mesa", description = "Controle e Gerenciamento de Mesas")
 public class MesaController {
     @Autowired
     MesaServices services;
