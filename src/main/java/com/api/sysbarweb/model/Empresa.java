@@ -1,6 +1,8 @@
 package com.api.sysbarweb.model;
 
 import com.api.sysbarweb.dto.EmpresaDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;

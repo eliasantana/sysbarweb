@@ -11,7 +11,6 @@ import java.util.List;
 
 public record FuncionarioDto(
         Long cdFuncionario,
-
         String nome,
         String caminhoImagem,
         String telefone,
@@ -28,10 +27,11 @@ public record FuncionarioDto(
         LocalDate dtDesligamento,
         LocalDate dtAdmissao,
         LocalDate dtNascimento,
-        LocalDate dtInclusao,
-        Cargo cargo,
-        Empresa empresa,
-        List<Caixa> caixas
+        LocalDate dtInclusao
+//        ,
+//        Cargo cargo,
+//        Empresa empresa,
+    //    List<Caixa> caixas
 ) {
     public FuncionarioDto(Funcionario f){
         this(f.getCdFuncionario(),
@@ -49,8 +49,11 @@ public record FuncionarioDto(
                 f.getDtDesligamento(),
                 f.getDtAdmissao(),
                 f.getDtNascimento(),
-                f.getDtInclusao(),
-                f.getCargo(),
-                f.getEmpresa(), f.getCaixas());
+                f.getDtInclusao()
+                //,
+               // f.getCargo(),
+               // f.getEmpresa(),
+               // f.getCaixas()
+        );
     }
 }

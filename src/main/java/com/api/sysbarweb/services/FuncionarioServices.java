@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,7 +99,12 @@ public class FuncionarioServices {
     }
 
     public ResponseEntity<FuncionarioDto> excluirFuncinario(Long idemplogada, Long idfuncionario) {
-      List<Funcionario> funcionario = repository.localizarFuncionario(idemplogada, idfuncionario);
+       List<Funcionario> funcionario = new ArrayList<>();
+        if (!idemplogada.equals(0L)) {
+            funcionario = repository.localizarFuncionario(idemplogada, idfuncionario);
+        }else{
+            funcionario = repository.localizarFuncionario(idfuncionario);
+        }
       if (funcionario.isEmpty()){
           throw new FuncionarioException("O funcionário informado não foi localizado na empresa logada!");
       }

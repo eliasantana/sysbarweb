@@ -38,7 +38,7 @@ public class FuncionarioController {
                                                    @RequestBody FuncionarioDto dto, UriComponentsBuilder builder){
        return services.adicionarFuncionario(dto, idemplogada, idcargo,builder);
     }
-    @PostMapping("/excluir/{idemplogada}/{idfuncionario}")
+    @DeleteMapping("/excluir/{idemplogada}/{idfuncionario}")
     public ResponseEntity<FuncionarioDto>excluir(@PathVariable Long idemplogada,
                                                  @PathVariable Long idfuncionario){
         return services.excluirFuncinario(idemplogada,idfuncionario);

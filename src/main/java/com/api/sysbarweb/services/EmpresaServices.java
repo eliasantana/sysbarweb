@@ -37,9 +37,7 @@ public class EmpresaServices {
         dto.setCnpj(cnpj);
         validaCnPJ(dto.getCnpj());
         List<Optional<Empresa>> empresaLocalizada = repository.existEmpresa(dto.getCnpj());
-        if (!empresaLocalizada.isEmpty()) {
-            throw new EmpresaExistsException("O CNPJ informado já existe para outra empresa! Verifique o CNPJ e tente ovamente.");
-        }
+
         Empresa empresaSalva = repository.save(new Empresa(dto));
         var uri = builder.path("/empresa/{id}").buildAndExpand(empresaSalva.getCdEmpresa()).toUri();
         return ResponseEntity.created(uri).body(new EmpresaDto(empresaSalva));
