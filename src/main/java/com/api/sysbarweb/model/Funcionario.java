@@ -50,6 +50,7 @@ public class Funcionario {
 
     public Funcionario(FuncionarioDto dto) {
         this.cdFuncionario = dto.cdFuncionario();
+        this.nome = dto.nome();
         this.caminhoImagem = dto.caminhoImagem();
         this.telefone = dto.telefone();
         this.login = dto.login();
@@ -64,10 +65,10 @@ public class Funcionario {
         this.dtAdmissao = dto.dtAdmissao();
         this.dtNascimento = dto.dtNascimento();
         this.dtInclusao = dto.dtInclusao();
-        this.cargo = dto.cargo();
-        this.empresa = dto.empresa();
-        this.nome = dto.nome();
-        this.caixas = dto.caixas();
+//        this.cargo = dto.cargo();
+//        this.empresa = dto.empresa();
+//        this.nome = dto.nome();
+//        this.caixas = dto.caixas();
 
     }
 
