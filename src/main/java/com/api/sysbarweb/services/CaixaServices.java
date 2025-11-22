@@ -43,14 +43,26 @@ public class CaixaServices {
         }
     }
 
+    public Caixa abrirCaixa(Long idemplogada, Long idfuncionario) {
+        Optional<Empresa> empresa = utilsServices.validaEmpresaLogada(idemplogada);
+        List<Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada,idfuncionario);
+            Caixa c = new Caixa();
+            c.setEmpresa(empresa.get());
+            c.setFuncionario(funcionario.get(0));
+            c.setSaldoInicial(BigDecimal.ZERO);
+            c.setSaldoFinal(BigDecimal.ZERO);
+            c.setStatus("A");
+            c.setDtAbertura(LocalDate.now());
+            return repository.save(c);
+    }
+
     public Caixa localizaCaixa(Long idemplogada, Long idfuncionario) {
        Caixa c = repository.localizaCaixa(idemplogada, idfuncionario);
-       if (c.getCdCaixa()!=null){
+        if (c!=null){
            return c;
        }else{
-           throw new CaixaException("Caixa não localizado!");
+           return abrirCaixa(idemplogada, idfuncionario);
        }
-
     }
 
     public ResponseEntity<CaixaDto> fecharCaixa(Long idemplogada, Long idfuncionario, String password) {
