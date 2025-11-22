@@ -1,9 +1,11 @@
 package com.api.sysbarweb.controller;
 
 import com.api.sysbarweb.dto.CaixaDto;
+import com.api.sysbarweb.model.Caixa;
 import com.api.sysbarweb.services.CaixaServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,4 +44,17 @@ public class CaixaController {
     ){
         return services.reabrirCaixa(idemplogada, idfuncionario, password);
     }
+
+    @GetMapping("/localizar/{idemlogada}/{idfuncionario}")
+    public ResponseEntity<CaixaDto> getCaixa(@PathVariable Long idemlogada,
+                                          @PathVariable Long idfuncionario ){
+        Caixa c =  services.localizaCaixa(idemlogada, idfuncionario);
+        if (c!=null){
+            return ResponseEntity.ok(new CaixaDto(c));
+        }else{
+            return (ResponseEntity<CaixaDto>) ResponseEntity.status(HttpStatusCode.valueOf(404));
+        }
+
+    }
+
 }

@@ -14,10 +14,10 @@ public class Caixa {
     private Long cdCaixa;
     private LocalDate dtAbertura;
     private LocalDate dtFechamento;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cd_funcionario")
     private Funcionario funcionario;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
     private BigDecimal saldoInicial;

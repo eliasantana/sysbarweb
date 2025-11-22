@@ -57,4 +57,9 @@ public class FuncionarioController {
         return  services.promoverFuncionario(idemplogada, idfuncionario, idnovocargo);
     }
 
+    @GetMapping("/get/{idfuncionario}")
+    public ResponseEntity<FuncionarioDto>getFuncionario(@PathVariable Long idfuncionario) {
+        return  services.getFuncioanrio(idfuncionario);
+    }
+
 }

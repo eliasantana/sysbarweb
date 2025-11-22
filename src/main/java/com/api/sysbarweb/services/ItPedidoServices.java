@@ -39,6 +39,7 @@ public class ItPedidoServices {
             item.setCdProduto(dto.produto().getCdProduto().toString());
             item.setTotal(dto.vlUnit().multiply(BigDecimal.valueOf(dto.qtd())));
             item.setDsProduto(dto.produto().getDsProduto());
+            item.setVlUnit(dto.vlUnit());
             itensPedidoDto.add(item);
 
         }

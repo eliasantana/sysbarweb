@@ -53,6 +53,7 @@ public class Empresa {
 
     private double tetoDesconto;
     @OneToMany(mappedBy = "empresa")
+    @JsonIgnore
     List<Caixa> caixas;
 
     public Empresa(){

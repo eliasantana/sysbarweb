@@ -142,4 +142,13 @@ public class FuncionarioServices {
     }
 
 
+    public ResponseEntity<FuncionarioDto> getFuncioanrio(Long idfuncionario) {
+      List<Funcionario>  funcionarioDto =  repository.localizarFuncionario(idfuncionario);
+      if (!funcionarioDto.isEmpty()){
+          FuncionarioDto dto = new FuncionarioDto(funcionarioDto.get(0));
+          return ResponseEntity.ok(dto);
+      }else{
+          throw  new FuncionarioException("O funcionário informao não foi localizado!");
+      }
+    }
 }
