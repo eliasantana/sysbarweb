@@ -1,5 +1,6 @@
 package com.api.sysbarweb.services;
 
+import com.api.sysbarweb.exception.FuncionarioException;
 import com.api.sysbarweb.projections.TxEstatisticaProjection;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class EstatisticaServices {
     EmpresaRepository empresaRepository;
     public ResponseEntity<TxEstatisticaProjection> getStatistica(Long cdEmpresa) {
         TxEstatisticaProjection projection = empresaRepository.getStatistica(cdEmpresa);
+        if (projection==null){
+            throw new FuncionarioException("Estatísticas não encontrada pra a rempresa logada!");
+        }
         return ResponseEntity.ok(projection);
     }
 }

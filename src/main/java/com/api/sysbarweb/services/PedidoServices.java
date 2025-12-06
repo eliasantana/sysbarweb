@@ -83,7 +83,7 @@ public class PedidoServices {
         return  itPedidoServices.localizarItensPedidoMesa(idemplogada, nrmesa);
     }
 
-    public ResponseEntity<PedidoDto> fecharPedido(Long idemplogada, Long idpedido, Long idfuncionario) {
+    public ResponseEntity<PedidoDto> fecharPedido(Long idemplogada, Long idpedido, Long idfuncionario, String formapagto) {
         Optional<Pedido> pedido = utilsServices.validapedido(idemplogada, idpedido);
         Optional<Mesa> mesa= mesaServices.repository.existeMesa(pedido.get().getCdMesa());
         List<Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada,idfuncionario);
@@ -127,6 +127,7 @@ public class PedidoServices {
         itPedido.setProduto(produtoEstoque.get().getProduto());
         itPedido.setVlUnit(produtoEstoque.get().getVlVenda());
         ItPedido item = itPedidoServices.adicioar(itPedido);
+        ItPedidoDto itemDto= new ItPedidoDto(item);//atenção
         int qtd = produtoEstoque.get().getQtd() - itPedido.getQtd();
         produtoEstoque.get().setQtd(qtd);
         ProdutoEstoque produtoEstoqueSalvo = produtoEstoqueRepository.save(produtoEstoque.get());

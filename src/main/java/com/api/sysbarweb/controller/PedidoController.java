@@ -48,12 +48,13 @@ public class PedidoController {
         return services.localizarItensPedidoMesa(idemplogada, nrmesa);
 
     }
-    @PostMapping("/fechar/{idemplogada}/{idpedido}/{idfuncionario}")
+    @PostMapping("/fechar/{idemplogada}/{idpedido}/{idfuncionario}/{formapagto}")
     public ResponseEntity<PedidoDto>fechar(@PathVariable Long idemplogada,
                                            @PathVariable Long idpedido,
-                                           @PathVariable Long idfuncionario){
+                                           @PathVariable Long idfuncionario,
+                                           @PathVariable String formapagto){
 
-        return services.fecharPedido(idemplogada, idpedido, idfuncionario);
+        return services.fecharPedido(idemplogada, idpedido, idfuncionario, formapagto);
     }
 
     @PostMapping("/incluir/{idemlogada}/{idpedido}/{idproduto}/{qtd}")
