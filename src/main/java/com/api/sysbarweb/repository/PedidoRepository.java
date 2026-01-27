@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface PedidoRepository extends CrudRepository<Pedido, Long> {
 
 
+    //Método utilizado pela tela de caixa
     @Query(value = " select p.* from pedido p, mesa m " +
                    " where p.cd_mesa = m.cd_mesa and m.status = 'O' and p.status_pedido <> 'F' " +
                    " and p.cd_empresa=:idemplogada ", nativeQuery = true)

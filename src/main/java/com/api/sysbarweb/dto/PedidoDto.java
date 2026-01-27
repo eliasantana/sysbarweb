@@ -13,10 +13,11 @@ public record PedidoDto(
     BigDecimal totalPedido,
     Long cdMesa,
     String statusPedido,
+    String formaPagto,
     Caixa caixa
 ) {
     public PedidoDto(Pedido p){
 
-        this (p.getCdPedido(), p.getDtInclusao(), p.getTotalPedido(), p.getCdMesa(), p.getStatusPedido(), p.getCaixa());
+        this (p.getCdPedido(), p.getDtInclusao(), p.getTotalPedido(), p.getCdMesa(), p.getStatusPedido(), p.getFormaPagto(), p.getCaixa());
     }
 }

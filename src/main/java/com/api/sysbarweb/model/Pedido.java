@@ -22,6 +22,7 @@ public class Pedido {
     private Long cdFuncionario;
     private BigDecimal totalPedido;
     private String statusPedido; // A -Aberto - F fechado
+    private String formaPagto;
     @ManyToOne
     @JoinColumn(name = "cd_caixa")
     private Caixa caixa;
@@ -40,6 +41,7 @@ public class Pedido {
         this.totalPedido = dto.totalPedido();
         this.statusPedido = dto.statusPedido();
         this.caixa = dto.caixa();
+        this.formaPagto = dto.formaPagto();
     }
 
     public Long getCdPedido() {
@@ -104,5 +106,13 @@ public class Pedido {
 
     public Caixa getCaixa() {
         return caixa;
+    }
+
+    public void setFormaPagto(String formaPagto) {
+        this.formaPagto = formaPagto;
+    }
+
+    public String getFormaPagto() {
+        return formaPagto;
     }
 }

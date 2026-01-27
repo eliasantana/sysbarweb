@@ -2,7 +2,6 @@ package com.api.sysbarweb.services;
 
 import com.api.sysbarweb.dto.CaixaDto;
 import com.api.sysbarweb.exception.CaixaException;
-import com.api.sysbarweb.exception.FuncionarioException;
 import com.api.sysbarweb.model.Caixa;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Funcionario;
@@ -13,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CaixaServices {
@@ -83,6 +84,20 @@ public class CaixaServices {
             throw new CaixaException("Caixa não localizado!");
         }
     }
+    public ResponseEntity<CaixaDto> fecharCaixa(Long idemplogada, Long idfuncionario, Long idCaixa) {
+        Caixa c = repository.localizaCaixa(idemplogada, idfuncionario, idCaixa);
+        if (c!=null){
+            if (c.getStatus().equalsIgnoreCase("f")){
+                throw new CaixaException("O Caixa informado já encontra-se fechado!");
+            }
+            List <Funcionario> funcionario = utilsServices.validaFuncionario(idemplogada, idfuncionario);
+            c.setStatus("F");
+            Caixa caixaSalvo = repository.save(c);
+            return ResponseEntity.ok().build();
+        }else{
+            throw new CaixaException("Caixa não localizado!");
+        }
+    }
 
     public ResponseEntity<CaixaDto> reabrirCaixa(Long idemplogada, Long idfuncionario, String password) {
         utilsServices.validaEmpresaLogada(idemplogada);
@@ -95,5 +110,9 @@ public class CaixaServices {
         }else{
             throw new CaixaException("Usuário ou senha inválidos");
         }
+    }
+
+    public List<CaixaDto> caixasAbertos() {
+       return repository.retornaTodosOsCaixas().stream().map(CaixaDto::new).collect(Collectors.toList());
     }
 }

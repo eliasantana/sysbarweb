@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/caixa")
@@ -35,6 +36,14 @@ public class CaixaController {
     ){
         return services.fecharCaixa(idemplogada, idfuncionario, password);
     }
+    @PostMapping("/fechar/{idemplogada}/{idfuncionario}/{idcaixa}")
+    public ResponseEntity<CaixaDto>fecharCaixa(
+            @PathVariable Long idemplogada,
+            @PathVariable Long idfuncionario,
+            @PathVariable Long idcaixa
+    ){
+        return services.fecharCaixa(idemplogada, idfuncionario, idcaixa);
+    }
 
     @PostMapping("/reabrir/{idemplogada}/{idfuncionario}")
     public ResponseEntity<CaixaDto>reabrirCaixa(
@@ -55,6 +64,12 @@ public class CaixaController {
             return (ResponseEntity<CaixaDto>) ResponseEntity.status(HttpStatusCode.valueOf(404));
         }
 
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<CaixaDto>> getCaixaAberto(){
+        List<CaixaDto> caixas  = services.caixasAbertos();
+        return ResponseEntity.ok(caixas);
     }
 
 }
