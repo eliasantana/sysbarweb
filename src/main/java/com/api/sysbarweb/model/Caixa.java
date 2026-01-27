@@ -1,6 +1,7 @@
 package com.api.sysbarweb.model;
 
 import com.api.sysbarweb.dto.CaixaDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

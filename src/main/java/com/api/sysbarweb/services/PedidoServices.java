@@ -44,6 +44,9 @@ public class PedidoServices {
 
     @Autowired
     CozinhaServices cozinhaServices;
+
+    @Autowired
+    UtilsServices services;
     public ResponseEntity<PedidoDto> adicionar(Long idemplogada,
                                                Long idfuncionario,
                                                Long idemesa,
@@ -96,6 +99,7 @@ public class PedidoServices {
             pedido.get().setStatusPedido("F");
             pedido.get().setTotalPedido(totalPedido);
             pedido.get().setCaixa(caixaLocalizado);
+            pedido.get().setFormaPagto(formapagto);
             PedidoDto dto = new PedidoDto(repository.save(pedido.get()));
             mesa.get().setStatus("L");
             mesaServices.mesaRepository.save(mesa.get());
@@ -166,7 +170,11 @@ public class PedidoServices {
     }
 
     public ResponseEntity<List<ItemDto>> listarItensPedido(Long idemplogada, Long idpedido) {
-        return itPedidoServices.localizar(idemplogada,idpedido);
+       if (utilsServices.getChave("SN_AGREGA_ITEM_PEDIDO").equals("S")){
+           return itPedidoServices.localizarProdutoAgregado(idemplogada,idpedido);
+       }else{
+           return itPedidoServices.localizar(idemplogada,idpedido);
+       }
     }
 
     public ResponseEntity<ItPedidoDto> removeItemPedido(Long idemplogada, Long idpedido, int pasword, Long cdItPedido) {
