@@ -16,11 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/produto")
 @Tag(name = "Produto", description = "Gerenciamento de Produtos")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProdutoController {
 
     @Autowired
     ProdutoServices services;
-    @Operation(summary = "Adiciona um produto ao Pedido informado",
+    @Operation(summary = "Adiciona um produto",
     responses ={@ApiResponse(responseCode = "200", description = "Sucesso"),
                 @ApiResponse(responseCode = "500", description = "Erro interno")})
     @PostMapping

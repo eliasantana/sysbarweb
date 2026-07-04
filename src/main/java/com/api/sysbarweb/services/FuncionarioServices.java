@@ -12,6 +12,10 @@ import com.api.sysbarweb.repository.CargoRepository;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import com.api.sysbarweb.repository.FuncionarioResponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,12 +50,19 @@ public class FuncionarioServices {
         if (funcionarioLocalizado.isEmpty()) {
             throw new FuncionarioException("Funcionário não localizado, acesso não autorizado!");
         }else if (funcionarioLocalizado.get().getSenha().equals(password)){
-             LoginValidate loginValidate = new LoginValidate(funcionarioLocalizado.get().getEmpresa().getCdEmpresa(),
-                    funcionarioLocalizado.get().getEmpresa().getNomeEmpresa(),
-                    funcionarioLocalizado.get().getCdFuncionario(),
-                    funcionarioLocalizado.get().getNome(),
-                    funcionarioLocalizado.get().getCargo().getCdCargo(),
-                    funcionarioLocalizado.get().getCargo().getDsCargo());
+             LoginValidate loginValidate = new LoginValidate(
+                     funcionarioLocalizado.get().getEmpresa().getCdEmpresa(),
+                     funcionarioLocalizado.get().getEmpresa().getNomeEmpresa(),
+                     funcionarioLocalizado.get().getCdFuncionario(),
+                     funcionarioLocalizado.get().getNome(),
+                     funcionarioLocalizado.get().getCargo().getCdCargo(),
+                     funcionarioLocalizado.get().getCargo().getDsCargo(),
+                     funcionarioLocalizado.get().getEmpresa().getEndereco(),
+                     funcionarioLocalizado.get().getEmpresa().getBairro(),
+                     funcionarioLocalizado.get().getEmpresa().getCep(),
+                     funcionarioLocalizado.get().getEmpresa().getCidade(),
+                     funcionarioLocalizado.get().getEmpresa().getUf(),
+                     funcionarioLocalizado.get().getEmpresa().getCnpj());
             return ResponseEntity.ok(loginValidate);
         }else{
             throw new FuncionarioException("Usuário ou senha Inválido!");
@@ -84,16 +95,12 @@ public class FuncionarioServices {
             throw new CargoException("O Cargo informado não existe!");
         }
         Funcionario funcionarioSalvo = new Funcionario();
-        if (funcionario.isEmpty()) {
-            Funcionario f = new Funcionario(dto);
-            Empresa e = new Empresa();
-            e.setCdEmpresa(idemplogada);
-            f.setEmpresa(e);
-            f.setCargo(cargo.get());
-            funcionarioSalvo = repository.save(f);
-        } else {
-            throw new FuncionarioException("O Funcionário " + funcionario.get().getNome() + " já existe na empresa logada " + idemplogada);
-        }
+        Funcionario f = new Funcionario(dto);
+        Empresa e = new Empresa();
+        e.setCdEmpresa(idemplogada);
+        f.setEmpresa(e);
+        f.setCargo(cargo.get());
+        funcionarioSalvo = repository.save(f);
         var uri = builder.path("/funcionario/listar/").buildAndExpand(idemplogada.toString()).toUri();
         return ResponseEntity.created(uri).build();
     }
@@ -109,7 +116,11 @@ public class FuncionarioServices {
           throw new FuncionarioException("O funcionário informado não foi localizado na empresa logada!");
       }
       Funcionario f = funcionario.get(0);
-      f.setSnAtivo("N");
+      if (f.getSnAtivo().equals("S")){
+          f.setSnAtivo("N");
+      }else{
+          f.setSnAtivo("S");
+      }
       Funcionario funcsalvo =repository.save(f);
       return  ResponseEntity.ok( new FuncionarioDto(funcsalvo));
     }
@@ -151,4 +162,24 @@ public class FuncionarioServices {
           throw  new FuncionarioException("O funcionário informao não foi localizado!");
       }
     }
+
+    public ResponseEntity<List<FuncionarioDto>> listarTeste(Long cdempresa,
+                                                            Long pagina, Long item,
+                                                            String sorting) {
+        int paginas = pagina.intValue();
+        int itens = item.intValue();
+        String direction = "asc";
+        Sort.Direction dir = direction.equalsIgnoreCase("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(paginas, itens, Sort.by(dir,sorting));
+        Page<Funcionario> funcionarioList = repository.listarTeste(pageable,cdempresa);
+        if (funcionarioList.isEmpty()) {
+            throw new FuncionarioException("Nenhum Funcionário Localizado!");
+        }
+        List<FuncionarioDto> funcionarioDto = funcionarioList.stream().map(f -> new FuncionarioDto(f)).collect(Collectors.toList());
+        return ResponseEntity.ok(funcionarioDto);
+    }
+
 }

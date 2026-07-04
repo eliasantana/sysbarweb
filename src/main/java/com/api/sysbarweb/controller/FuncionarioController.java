@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/funcionario")
 @Tag(name = "Funcionário", description = "Gerenciamento e Controle dos Funcionários")
 public class FuncionarioController {
@@ -22,6 +23,14 @@ public class FuncionarioController {
     @GetMapping("/listar/{idempresa}")
     public ResponseEntity<List<FuncionarioDto>> listar(@PathVariable Long idempresa){
         return services.listar(idempresa);
+    }
+
+    @GetMapping("/teste/{idempresa}")
+    public ResponseEntity<List<FuncionarioDto>> listarTeste(@PathVariable Long idempresa,
+                                                            @RequestParam(name = "pagina", defaultValue = "0") Long pagina,
+                                                            @RequestParam(name="item", defaultValue = "2") Long item,
+                                                            @RequestParam(name="direction",defaultValue = "asc") String direction){
+        return services.listarTeste(idempresa, pagina, item,direction);
     }
 
     @PostMapping("/transferir/{idemplogada}/{idfuncionario}/{idempdestino}")

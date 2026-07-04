@@ -1,6 +1,8 @@
 package com.api.sysbarweb.repository;
 
 import com.api.sysbarweb.model.Funcionario;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,9 @@ import java.util.Optional;
 public interface FuncionarioResponsitory extends CrudRepository<Funcionario, Long> {
     @Query(value = "select * from funcionario where cd_empresa =:cdempresa",nativeQuery = true)
     List<Funcionario> listar(Long cdempresa);
+
+    @Query(value = "select * from funcionario where cd_empresa =:cdempresa",nativeQuery = true)
+    Page<Funcionario>listarTeste(Pageable pageable, Long cdempresa);
 
     @Query(value = "select * from funcionario where cd_empresa =:cdempresa and cd_funcionario=:idfuncionario",nativeQuery = true)
     List<Funcionario> localizarFuncionario(Long cdempresa, Long idfuncionario);

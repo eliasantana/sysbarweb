@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/empresa")
+@CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Empresa", description = "Cadasstro e Gerenciamento de Empresas")
 public class EmpresaController {
     @Autowired
