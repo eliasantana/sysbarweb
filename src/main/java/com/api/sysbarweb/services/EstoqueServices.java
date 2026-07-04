@@ -16,6 +16,8 @@ import com.api.sysbarweb.repository.ProdutoEstoqueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -58,5 +60,12 @@ public class EstoqueServices {
         List<ProdutoEstoque> produtos= produtoEstoqueRepository.listarProdutos(idestoque);
         List<ProdutoEstoqueDto>lstp = produtos.stream().map(ProdutoEstoqueDto::new).collect(Collectors.toList());
         return ResponseEntity.ok(lstp);
+    }
+
+
+    public ResponseEntity<EstoqueDto> excluir(Long idestoque, Long idemplogada) {
+        Optional<Estoque> estoque= repository.localizar(idemplogada, idestoque);
+        repository.delete(estoque.get());
+        return ResponseEntity.noContent().build();
     }
 }

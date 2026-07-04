@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cargo")
+@CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Cargo", description = "Controle e Gerenciamento de Cargos")
 public class CargoController {
 
@@ -24,7 +25,13 @@ public class CargoController {
         return services.listar();
     }
 
-    @PutMapping("/adicionar")
+    @GetMapping("/listar/{cdcargo}")
+    public CargoDto listar(@PathVariable Long cdcargo){
+        return services.localizar(cdcargo);
+    }
+
+
+    @PostMapping("/adicionar")
     public ResponseEntity<CargoDto> adicionar(@RequestBody @Valid CargoDto dto, UriComponentsBuilder builder){
 
         return services.adicionar(dto,builder);

@@ -1,16 +1,24 @@
 package com.api.sysbarweb.dto;
 
 import com.api.sysbarweb.model.Cargo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
 public record CargoDto(
+        @JsonProperty("cdcargo")
          Long cdCargo,
-         String dsCargo,
+        @JsonProperty("dscargo")
+        String dsCargo,
+        @JsonProperty("vlbruto")
          BigDecimal vlSalarioBruto,
+        @JsonProperty("vlliquido")
          BigDecimal vlSalarioLiquido,
+        @JsonProperty("vlinss")
          BigDecimal vlInss,
+        @JsonProperty("vlfgts")
          BigDecimal vlFgts,
+        @JsonProperty("snativo")
          String snAtivo) {
 
         public CargoDto (Cargo cargo){

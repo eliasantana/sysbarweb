@@ -32,6 +32,18 @@ public class CargoServices {
                 .collect(Collectors.toList());
        return ResponseEntity.ok(listaDeCargoDto);
     }
+    /*
+       Localiza um Cargo através do ID
+    */
+    public CargoDto localizar(Long cdCargo) {
+        Optional<Cargo> c = repository.localizar(cdCargo);
+        if(c.isEmpty()){
+           throw new CargoException("Cargo não localizado!");
+        }else{
+            return new CargoDto(c.get());
+        }
+
+    }
     /**
      * Adiciona um Cargo se ele ainda não existir
      * Author: Elias Santana

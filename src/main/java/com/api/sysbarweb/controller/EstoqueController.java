@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping("/estoque")
 @Tag(name = "Estoque", description = "Gerenciamento do Estoque")
 public class EstoqueController {
@@ -39,5 +40,9 @@ public class EstoqueController {
     @GetMapping("/produtoestoque/{idestoque}")
     public ResponseEntity<List<ProdutoEstoqueDto>>idestoque(@PathVariable Long idestoque){
         return services.listarProdutoEstoque(idestoque);
+    }
+@DeleteMapping("/excluir/{cdestoque}/{idemplocada}")
+    public ResponseEntity<EstoqueDto>excluir(@PathVariable Long cdestoque,@PathVariable Long idemplocada){
+       return services.excluir(cdestoque,idemplocada);
     }
 }
