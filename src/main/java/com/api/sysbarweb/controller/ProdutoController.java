@@ -35,6 +35,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDto>localizar(@PathVariable Long idproduto){
         return services.localizar(idproduto);
     }
+
     @Operation(summary = "Retorna a lista de todos os produtos ativos no estoque",
             responses = {@ApiResponse(responseCode = "200", description = "Sucesso"),
                          @ApiResponse(responseCode = "500", description = "Erro interno")})
@@ -42,6 +43,7 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoDto>>listarTodos(){
         return services.listarTodos();
     }
+
     @Operation(summary = "Retorna a lista de todos os produtos da empresa logada",
             responses = {@ApiResponse(responseCode = "200", description = "Sucesso"),
                          @ApiResponse(responseCode = "500", description = "Erro interno")})
@@ -52,13 +54,14 @@ public class ProdutoController {
     @Operation(summary = "Exclui Produto",
             responses = {@ApiResponse(responseCode = "200", description = "Sucesso"),
                          @ApiResponse(responseCode = "500", description = "Erro interno")})
-    @PostMapping("/excluir/{idproduto}")
+    @DeleteMapping("/excluir/{idproduto}")
     public ResponseEntity<ProdutoDto>excluir(@PathVariable Long idproduto){
         return services.excluir(idproduto);
     }
     @Operation(summary = "Altera um Produto",
             responses = {@ApiResponse(responseCode = "200", description = "Sucesso"),
                          @ApiResponse(responseCode = "500", description = "Erro interno")})
+
     @PutMapping("/alterar")
     public ResponseEntity<ProdutoDto>altear(@RequestBody ProdutoDto dto){
         return services.alterar(dto);
