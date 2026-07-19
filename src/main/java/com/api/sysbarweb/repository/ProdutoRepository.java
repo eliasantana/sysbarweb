@@ -14,9 +14,11 @@ public interface ProdutoRepository extends CrudRepository<Produto, Long>{
 
     @Query(value ="select * from produto where ds_produto=:dsproduto",nativeQuery = true)
     Optional<Produto> localizarProdutoPorDescricao(String dsproduto);
-    @Query(value ="select * from produto where sn_ativo='S'",nativeQuery = true)
+
+    @Query(value ="select * from produto",nativeQuery = true)
     List<Produto> listarTodos();
-    @Query(value ="select * from produto where cd_produto=:cdproduto and sn_ativo='S'",nativeQuery = true)
+
+    @Query(value ="select * from produto where cd_produto=:cdproduto",nativeQuery = true)
     Optional<Produto> localizar(Long cdproduto);
 
     @Query(value ="Select p.* from produto p, produto_estoque pe, estoque e " +
