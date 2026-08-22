@@ -51,7 +51,7 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoDto>>listarTodosOsProdutosEmpLogada( @PathVariable Long cdemplogada){
         return services.listarTodosOsProdutosEmpLogada(cdemplogada);
     }
-    @Operation(summary = "Exclui Produto",
+    @Operation(summary = "Realiza a exclusão lógica de um Produto",
             responses = {@ApiResponse(responseCode = "200", description = "Sucesso"),
                          @ApiResponse(responseCode = "500", description = "Erro interno")})
     @DeleteMapping("/excluir/{idproduto}")
