@@ -126,6 +126,12 @@ public class ProdutoServices {
         }else{
             ProdutoEstoque produtoEstoqueAtual = produtoEstoqueLocalizado.get();
             produtoEstoqueAtual.setQtd(produtoEstoqueAtual.getQtd() + dto.qtd());
+            if (dto.qtdMax() > produtoEstoqueAtual.getQtdMax()){
+                produtoEstoqueAtual.setQtdMax(dto.qtdMax());
+            }
+            if (dto.qtdMin() > produtoEstoqueAtual.getQtdMin()){
+                produtoEstoqueAtual.setQtdMin(dto.qtdMin());
+            }
             ProdutoEstoque produtoEstoqueSalvo =  produtoEstoqueRepository.save(produtoEstoqueAtual);
             //produtoEstoqueSalvo.setQtd(dto.qtd()); //Seta novamente a quatidade solicitada para registrar a quantidade correna na movimentação
             movimentacaoServices.adicionaMovimentacao(produtoEstoqueSalvo, dto.qtd(),"E");
