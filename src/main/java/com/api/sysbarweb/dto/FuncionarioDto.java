@@ -28,10 +28,7 @@ public record FuncionarioDto(
         LocalDate dtAdmissao,
         LocalDate dtNascimento,
         LocalDate dtInclusao
-//        ,
-//        Cargo cargo,
-//        Empresa empresa,
-    //    List<Caixa> caixas
+
 ) {
     public FuncionarioDto(Funcionario f){
         this(f.getCdFuncionario(),

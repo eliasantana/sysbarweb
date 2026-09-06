@@ -1,10 +1,12 @@
 package com.api.sysbarweb.repository;
 
+import com.api.sysbarweb.dto.FuncionarioDto;
 import com.api.sysbarweb.model.Funcionario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,4 +32,6 @@ public interface FuncionarioResponsitory extends CrudRepository<Funcionario, Lon
     @Query(value="select * from funcionario where cd_funcionario=:idfuncionario", nativeQuery = true)
     List<Funcionario> localizarFuncionario(Long idfuncionario);
 
+    @Query(value = "select * from funcionario where cd_cargo=:idcargo", nativeQuery = true)
+    List<Funcionario> getFuncionarioCargo(Long idcargo);
 }

@@ -1,6 +1,7 @@
 package com.api.sysbarweb.repository;
 
 import com.api.sysbarweb.model.Mesa;
+import com.api.sysbarweb.projections.ProxNumeroMesaProjetction;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,8 @@ public interface MesaRepository extends CrudRepository<Mesa, Long> {
     Optional<Mesa> existeMesa(Long cdmesa);
     @Query(value = "select * from mesa where cd_empresa=:idemplogada and cd_funcionario=:idfuncionario", nativeQuery = true)
     List<Mesa> listarMesaGarcom(Long idemplogada, Long idfuncionario);
+    @Query(value = "select max(nr_mesa)+1 nr_mesa from mesa where cd_empresa=:cdEmpresa", nativeQuery = true)
+    ProxNumeroMesaProjetction getProximoNrMesa(Long cdEmpresa);
+
 
 }

@@ -1,5 +1,5 @@
 package com.api.sysbarweb.projections;
 
-public interface ProxNumeroMesa {
-    Integer proximoNrmesa();
+public interface ProxNumeroMesaProjetction {
+    Integer getNrMesa();
 }
