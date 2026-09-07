@@ -182,4 +182,11 @@ public class FuncionarioServices {
         return ResponseEntity.ok(funcionarioDto);
     }
 
+    public ResponseEntity<List<Funcionario>> getFuncioanarioCargo(Long idcargo) {
+        List<Funcionario> funcionarios = repository.getFuncionarioCargo(idcargo);
+        if (funcionarios.isEmpty()){
+            throw new FuncionarioException("Nenhum funcioário com o cargo informado foi localizado!");
+        }
+        return ResponseEntity.ok(funcionarios);
+    }
 }

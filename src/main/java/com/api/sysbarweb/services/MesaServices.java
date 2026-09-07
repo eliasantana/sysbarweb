@@ -7,6 +7,7 @@ import com.api.sysbarweb.exception.MesaException;
 import com.api.sysbarweb.model.Empresa;
 import com.api.sysbarweb.model.Funcionario;
 import com.api.sysbarweb.model.Mesa;
+import com.api.sysbarweb.projections.ProxNumeroMesaProjetction;
 import com.api.sysbarweb.repository.EmpresaRepository;
 import com.api.sysbarweb.repository.FuncionarioResponsitory;
 import com.api.sysbarweb.repository.MesaRepository;
@@ -54,7 +55,8 @@ public class MesaServices {
     public ResponseEntity<MesaDto> adicionar(Long idemplogada, int nrmesa, Long idfuncionario, UriComponentsBuilder builder) {
         Optional<Empresa> emp= empresaRepository.getEmpresa(idemplogada);
         if(repository.existeMesa(idemplogada, nrmesa).isPresent()){
-            throw new MesaException("A mesa informada já existe");
+            ProxNumeroMesaProjetction proxmoNrMesa = repository.getProximoNrMesa(idemplogada);
+            throw new MesaException(String.format("A mesa  %s já existe na Empresa %s. Próximo Número disponível é %s. ", nrmesa, idemplogada, proxmoNrMesa.getNrMesa()));
         }
         if(emp.isEmpty()){
             throw new EmpresaException("A empresa informada não localizda!");
@@ -136,13 +138,22 @@ public class MesaServices {
         }
        mesa.get().setFuncionario(funcionario.get(0));
        mesa.get().setEmpresa(emp.get());
-       if (mesa.get().getFuncionario().getCdFuncionario() !=idnovocarcom){
-           mesaRepository.save(mesa.get());
-       }
-       return ResponseEntity.ok().build();
+       mesaRepository.save(mesa.get());
+    return ResponseEntity.ok().build();
     }
 
     public Optional<Mesa> getMesa(Long cdMesa) {
         return repository.existeMesa(cdMesa);
+    }
+
+
+    public ResponseEntity<MesaDto> excluir(Long cdmesa) {
+        Optional<Mesa> mesa = mesaRepository.existeMesa(cdmesa);
+        if (mesa.isEmpty()){
+            throw new MesaException("Mesa não localizada!");
+        }else{
+            mesaRepository.delete(mesa.get());
+        }
+        return ResponseEntity.noContent().build();
     }
 }

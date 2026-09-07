@@ -24,7 +24,7 @@ public class EstoqueController {
     @Autowired
     EstoqueServices services;
     @Operation(summary = "Lista os estoques cadastrados",responses = {@ApiResponse(responseCode = "200", description = "Sucesso"),
-                                                            @ApiResponse(responseCode = "500", description = "Erro interno")})
+                                                                      @ApiResponse(responseCode = "500", description = "Erro interno")})
     @GetMapping("/listar/{idemplogada}")
     public ResponseEntity<List<EstoqueDto>>listar(@PathVariable Long idemplogada){
         return  services.listar(idemplogada);
