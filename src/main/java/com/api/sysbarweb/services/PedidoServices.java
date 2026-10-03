@@ -82,7 +82,8 @@ public class PedidoServices {
     public ResponseEntity<List<ItemDto>> localizar(Long idemplogada, Long idpedido) {
         return  itPedidoServices.localizar(idemplogada, idpedido);
     }
-    public List<ItemDto> localizarItensPedidoMesa(Long idemplogada, Long nrmesa) {
+
+   public List<ItemDto> localizarItensPedidoMesa(Long idemplogada, Long nrmesa) {
         return  itPedidoServices.localizarItensPedidoMesa(idemplogada, nrmesa);
     }
 
