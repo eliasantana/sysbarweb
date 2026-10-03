@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/cozinha")
 @Tag(name = "Cozinha", description = "Gerenciamento da Cozinha!")
 public class CozinhaController {

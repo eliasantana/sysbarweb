@@ -20,7 +20,7 @@ public interface ItPedidoRepository extends CrudRepository<ItPedido, Long> {
             " where it.cd_pedido = p.cd_pedido  " +
             " and p.cd_empresa =:idemplogada " +
             " and p.cd_pedido =:idpedido " +
-            " and it.cd_it_pedido =:iditpedido  ", nativeQuery = true)
+            " and  it.cd_it_pedido =:iditpedido ", nativeQuery = true)
     List<ItPedido> localizarItemDoPedido(Long idemplogada, Long idpedido, Long iditpedido);
 
     @Query(value="SELECT it.* FROM it_pedido it, pedido p, mesa m " +
