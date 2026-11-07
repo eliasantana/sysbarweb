@@ -22,4 +22,6 @@ public interface CozinhaRepository extends CrudRepository<Cozinha, Long> {
     @Query(value = "select * from cozinha where cd_cozinha=:idcozinha", nativeQuery = true)
     Optional<Cozinha> localizarPrato(Long idcozinha);
 
+    @Query(value = "select * from cozinha where cd_empresa=:idemplogada and status <> 'L'", nativeQuery = true)
+    List<Cozinha> listar(Long idemplogada);
 }

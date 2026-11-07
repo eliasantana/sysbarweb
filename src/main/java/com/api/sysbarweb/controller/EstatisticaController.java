@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://10.0.0.102:4200")
 @RequestMapping("/estatistica")
 @Tag(name = "Estatistica", description = "Estatísticas da Empresa Logada")
 public class EstatisticaController {

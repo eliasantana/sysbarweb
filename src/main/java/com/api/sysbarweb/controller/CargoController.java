@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cargo")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://10.0.0.102:4200")
 @Tag(name = "Cargo", description = "Controle e Gerenciamento de Cargos")
 public class CargoController {
 

@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://10.0.0.102:4200")
 @RequestMapping("/pedido")
 @Tag(name = "Pedido", description = "Gerenciamento e Controle de Pedidos")
 public class PedidoController {

@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cozinha")
+@CrossOrigin(origins = "http://10.0.0.102:4200")
 @Tag(name = "Cozinha", description = "Gerenciamento da Cozinha!")
 public class CozinhaController {
     @Autowired
@@ -76,6 +77,11 @@ public class CozinhaController {
                                                   @PathVariable Long idfuncionario,
                                                   @PathVariable Long idcozinha){
         return services.removerPrato(idemplogada, idfuncionario, idcozinha);
+    }
+
+    @GetMapping("/listar/{idemplogada}")
+    public ResponseEntity<List<CozinhaDto>>listar(@PathVariable Long idemplogada){
+        return services.listar(idemplogada);
     }
 
 }
