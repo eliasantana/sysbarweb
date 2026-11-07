@@ -86,4 +86,10 @@ public class CozinhaServices {
             }
         }
     }
+
+    public ResponseEntity<List<CozinhaDto>> listar(Long idemplogada) {
+        List<Cozinha> listaDeIntensCozinha = repository.listar(idemplogada);
+        List<CozinhaDto> listaDeItensDto = listaDeIntensCozinha.stream().map(CozinhaDto::new).toList();
+        return ResponseEntity.ok(listaDeItensDto);
+    }
 }

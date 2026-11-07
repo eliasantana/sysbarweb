@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://10.0.0.102:4200")
 @Tag(name = "Autenticacao", description = "Autenticação de Usuário")
 public class AutenticacaoController {
     @Autowired
